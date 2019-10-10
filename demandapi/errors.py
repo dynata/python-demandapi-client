@@ -1,0 +1,2 @@
+class DemandAPIError(Exception):
+    pass
