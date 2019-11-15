@@ -49,17 +49,6 @@ class AuthenticationTestMissingCredentials(unittest.TestCase):
         with self.assertRaises(DemandAPIError):
             DemandAPIClient()
 
-    @patch('os.getenv')
-    def test_missing_base_url(self, mock_getenv):
-        mock_getenv.side_effect = [
-            "test_client_id",
-            "test_username",
-            "test_password",
-            None
-        ]
-        with self.assertRaises(DemandAPIError):
-            DemandAPIClient()
-
 
 def api_test_url(endpoint):
     return "{}{}".format(BASE_URL, endpoint)
