@@ -17,4 +17,4 @@ Information on [contributing](CONTRIBUTING.md).
 
 ## Testing
 
-<need some>
+Use the command `pytest tests` to run the tests for this project.

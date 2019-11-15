@@ -12,7 +12,7 @@ class DemandAPIClient(object):
             raise DemandAPIError("All authentication data is required.")
         self._access_token = None
         self._refresh_token = None
-        self.base_host = os.getenv('DYNATA_DEMAND_BASE_URL', 'https://api.researchnow.com')
+        self.base_host = os.getenv('DYNATA_DEMAND_BASE_URL', default='https://api.researchnow.com')
         self.auth_base_url = '{}/auth/v1'.format(self.base_host)
         self.base_url = '{}/sample/v1'.format(self.base_host)
 
