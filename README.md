@@ -1,6 +1,5 @@
 # python-demandapi-client
-A Python client library for the Dynata Demand API
-
+A Python client library for the [Dynata Demand API](https://developers.dynata.com/)
 ## Setup
 
 The client requires environment variables to be set for the Dynata Demand API credentials. These can be found in `.env-example`.
