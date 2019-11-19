@@ -17,4 +17,12 @@ Information on [contributing](CONTRIBUTING.md).
 
 ## Testing
 
-Use the command `pytest tests` to run the tests for this project.
+To run the tests,
+
+    virtualenv venv
+    . venv/bin/activate
+    pip install -r requirements.txt
+    pytest tests
+    deactivate
+
+to run the tests for this project.
