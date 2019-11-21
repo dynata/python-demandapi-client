@@ -112,3 +112,6 @@ class DemandAPIClient(object):
 
     def get_project(self, project_id):
         return self._api_get('/projects/{}'.format(project_id))
+
+    def get_lineitem(self, project_id, lineitem_id):
+        return self._api_get('/projects/{}/lineItems/{}'.format(project_id, lineitem_id))
