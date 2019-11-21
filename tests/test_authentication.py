@@ -16,6 +16,33 @@ BASE_URL = "http://test-url.example"
 
 
 class AuthenticationTestMissingCredentials(unittest.TestCase):
+    def test_authentication_params(self):
+        DemandAPIClient(client_id="test", username="test", password="test", base_host=BASE_URL)
+
+        with self.assertRaises(DemandAPIError):
+            DemandAPIClient(username="test", password="test", base_host=BASE_URL)
+
+        with self.assertRaises(DemandAPIError):
+            DemandAPIClient(client_id="test", password="test", base_host=BASE_URL)
+
+        with self.assertRaises(DemandAPIError):
+            DemandAPIClient(client_id="test", username="test", base_host=BASE_URL)
+
+    @patch('os.getenv')
+    def test_authentication_params_with_env(self, mock_getenv):
+        mock_getenv.side_effect = [
+            "test_client_id",
+            "test_username",
+            "test_password",
+            BASE_URL
+        ]
+
+        # None of these should raise an error if the appropriate missing data is available in the environment.
+        DemandAPIClient(client_id="test", username="test", password="test", base_host=BASE_URL)
+        DemandAPIClient(username="test", password="test", base_host=BASE_URL)
+        DemandAPIClient(client_id="test", password="test", base_host=BASE_URL)
+        DemandAPIClient(client_id="test", username="test", base_host=BASE_URL)
+
     @patch('os.getenv')
     def test_missing_client_id(self, mock_getenv):
         mock_getenv.side_effect = [
