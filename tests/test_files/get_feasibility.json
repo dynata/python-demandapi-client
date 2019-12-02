@@ -1,0 +1,76 @@
+{
+  "data": [
+    {
+      "extLineItemId": "lineItem001",
+      "feasibility": {
+        "status": "READY",
+        "costPerInterview": 3.14,
+        "expiry": "05/01/2018 00:00:00",
+        "currency": "USD",
+        "feasible": true,
+        "totalCount": 50343,
+        "valueCounts": [
+          {
+            "quotaCells": [
+              {
+                "quotaNodes": [
+                  {
+                    "attributeId": "11",
+                    "options": [
+                      "1"
+                    ]
+                  }
+                ],
+                "feasibilityCount": 1000
+              },
+              {
+                "quotaNodes": [
+                  {
+                    "attributeId": "11",
+                    "options": [
+                      "2"
+                    ]
+                  }
+                ],
+                "feasibilityCount": 1200
+              }
+            ]
+          }
+        ]
+      },
+      "quote": {
+        "costPerUnit": 3.14,
+        "currency": "USD",
+        "detailedQuote": [
+          {
+            "costPerUnit": 2.14,
+            "estimatedCost": 2140,
+            "title": "Completes",
+            "type": "BASE",
+            "units": 1000
+          },
+          {
+            "costPerUnit": 1,
+            "estimatedCost": 1000,
+            "title": "Completes",
+            "type": "PREMIUM",
+            "units": 1000
+          }
+        ],
+        "estimatedCost": 3140
+      }
+    },
+    {
+      "extLineItemId": "lineItem002",
+      "feasibility": {
+        "status": "PROCESSING",
+        "costPerInterview": null,
+        "expiry": null,
+        "currency": null,
+        "feasible": null,
+        "totalCount": null,
+        "valueCounts": []
+      }
+    }
+  ]
+}
