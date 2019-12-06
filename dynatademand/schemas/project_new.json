@@ -1,0 +1,281 @@
+{
+  "type": "object",
+  "title": "New Project",
+  "properties": {
+    "extProjectId": {
+      "type": "string",
+      "description": "A unique identifier for your project",
+      "maxLength": 255
+    },
+    "title": {
+      "type": "string",
+      "description": "A project title of your choosing",
+      "maxLength": 255
+    },
+    "jobNumber": {
+      "type": "string",
+      "description": "A job number of your choosing",
+      "maxLength": 100
+    },
+    "notificationEmails": {
+      "type": "array",
+      "description": "The email addresses to receive notifications",
+      "format": "email",
+      "items": {
+        "type": "string"
+      }
+    },
+    "devices": {
+      "type": "array",
+      "description": "Device targeting for the project",
+      "enum": [
+        "mobile",
+        "desktop",
+        "tablet"
+      ],
+      "default": [
+        "mobile",
+        "desktop",
+        "tablet"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "category": {
+      "type": "object",
+      "required": [
+        "surveyTopic"
+      ],
+      "properties": {
+        "surveyTopic": {
+          "type": "array",
+          "description": "List of possible topics for a survey.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "lineItems": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "title": "New Line Item",
+        "required": [
+          "extLineItemId",
+          "countryISOCode",
+          "languageISOCode",
+          "indicativeIncidence",
+          "daysInField",
+          "lengthOfInterview",
+          "targets"
+        ],
+        "properties": {
+          "extLineItemId": {
+            "type": "string",
+            "description": "A unique identifier for your Line Item"
+          },
+          "title": {
+            "type": "string",
+            "description": "A Line Item title of your choosing"
+          },
+          "countryISOCode": {
+            "type": "string",
+            "description": "2 letter ISO Country Code",
+            "minLength": 2,
+            "maxLength": 2
+          },
+          "languageISOCode": {
+            "type": "string",
+            "description": "2 letter ISO Language Code",
+            "minLength": 2,
+            "maxLength": 2
+          },
+          "surveyURL": {
+            "type": "string",
+            "description": "Survey URL to send panelist into. "
+          },
+          "surveyTestURL": {
+            "type": "string",
+            "description": "Survey Test URL. Required for survey verification"
+          },
+          "indicativeIncidence": {
+            "type": "integer",
+            "description": "Percent of panelists you expect to qualify for the survey after they go in"
+          },
+          "daysInField": {
+            "type": "integer",
+            "description": "Number of days the survey should be active in the field. We do not stop the survey after daysInField has expired"
+          },
+          "lengthOfInterview": {
+            "type": "integer",
+            "description": "Average number of minutes it takes a user to complete your survey"
+          },
+          "deliveryType": {
+            "type": "string",
+            "default": "BALANCED",
+            "description": "The plan on how responses will flow into the survey.",
+            "enum": [
+              "SLOW",
+              "BALANCED",
+              "FAST"
+            ]
+          },
+          "sources": {
+            "type": "array",
+            "description": "The supplier source that you would like to buy sample from. You can get the list of sources available to your account using the [Get List of Sources](/demand-api-reference/data_endpoints/supplier-sources/get-sources) endpoint",
+            "default": 100,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "targets": {
+            "type": "array",
+            "description": "Total count of survey completes required for this line item",
+            "items": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "description": "Total number of counts required for this line item for the specified target type",
+                  "type": "integer"
+                },
+                "dailyLimit": {
+                  "description": "Total number of daily counts required for this line item",
+                  "type": "integer"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "The type of counts required for this line item.",
+                  "enum": [
+                    "COMPLETE"
+                  ]
+                }
+              }
+            }
+          },
+          "quotaPlan": {
+            "type": "object",
+            "title": "Quota Plan",
+            "description": "Defines the type of respondents you want to invite for the survey",
+            "properties": {
+              "filters": {
+                "type": "array",
+                "description": "Filters are minimum set of targeting that every respondent must have in order to qualify for the study. Only attributes that have `isAllowedInFilters = true` is allowed to be used in `filters`",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "attributeId": {
+                      "type": "string",
+                      "description": "The attribute you want to target respondents on"
+                    },
+                    "options": {
+                      "type": "array",
+                      "description": "The options of the attribute you want to target respondents on",
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "operator": {
+                      "type": "string",
+                      "enum": [
+                        "exclude",
+                        "include"
+                      ],
+                      "default": "include",
+                      "description": "The operator to use for the attribute options."
+                    }
+                  }
+                }
+              },
+              "quotaGroups": {
+                "type": "array",
+                "description": "Quota groups define the allocated targeting attributes for panelists within this line item. Only attributes that have `isAllowedInQuotas = true` is allowed in `quotaGroups`.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "A quota group name of your choosing"
+                    },
+                    "quotaCells": {
+                      "type": "array",
+                      "description": "Quota Cells define the percentage allocation for the required targeting. A quota cell is made up of a collection of quota Nodes",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "quotaNodes": {
+                            "type": "array",
+                            "description": "Quota Nodes define the collection of attributes and options being targeted.",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "attributeId": {
+                                  "type": "string",
+                                  "description": "The attribute you want to target respondents on"
+                                },
+                                "options": {
+                                  "type": "array",
+                                  "description": "The options of the attribute you want to target respondents on",
+                                  "uniqueItems": true,
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "operator": {
+                                  "type": "string",
+                                  "enum": [
+                                    "exclude",
+                                    "include"
+                                  ],
+                                  "default": "include",
+                                  "description": "**Deprecated field** The operator to use for the attribute options."
+                                }
+                              }
+                            }
+                          },
+                          "count": {
+                            "type": "integer",
+                            "description": "The count of respondents you want to qualify for the defined quota cell"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "exclusions": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "extProjectId",
+    "category",
+    "lineItems"
+  ]
+}
