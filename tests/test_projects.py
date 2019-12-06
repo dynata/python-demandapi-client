@@ -28,3 +28,12 @@ class TestProjectEndpoints(unittest.TestCase):
         self.api.get_project(1)
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.json(), project_json)
+
+    @responses.activate
+    def test_get_projects(self):
+        with open('./tests/test_files/get_projects.json', 'r') as project_file:
+            project_json = json.load(project_file)
+        responses.add(responses.GET, '{}/sample/v1/projects'.format(BASE_HOST), json=project_json, status=200)
+        self.api.get_projects()
+        self.assertEqual(len(responses.calls), 1)
+        self.assertEqual(responses.calls[0].response.json(), project_json)
