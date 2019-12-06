@@ -110,6 +110,9 @@ class DemandAPIClient(object):
             ))
         return logout_response.json()
 
+    def get_countries(self):
+        return self._api_get('/countries')
+
     def get_project(self, project_id):
         return self._api_get('/projects/{}'.format(project_id))
 
