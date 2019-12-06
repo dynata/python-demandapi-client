@@ -110,6 +110,9 @@ class DemandAPIClient(object):
             ))
         return logout_response.json()
 
+    def get_event(self, event_id):
+        return self._api_get('/events/{}'.format(event_id))
+
     def get_project(self, project_id):
         return self._api_get('/projects/{}'.format(project_id))
 
