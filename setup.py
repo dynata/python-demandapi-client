@@ -12,7 +12,7 @@ setup(
     download_url="https://pypi.python.org/pypi/dynata-demandapi-client",
     packages=find_packages(exclude=('tests', )),
     platforms=['Any'],
-    install_requires=['requests', ],
+    install_requires=['requests', 'jsonschema'],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     keywords='dynata demand api',
