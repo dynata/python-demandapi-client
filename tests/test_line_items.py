@@ -30,6 +30,15 @@ class TestLineItemEndpoints(unittest.TestCase):
         self.assertEqual(responses.calls[0].response.json(), line_item_json)
 
     @responses.activate
+    def test_get_line_items(self):
+        with open('./tests/test_files/get_line_items.json', 'r') as line_item_file:
+            line_item_json = json.load(line_item_file)
+        responses.add(responses.GET, '{}/sample/v1/projects/1/lineItems'.format(BASE_HOST), json=line_item_json, status=200)
+        self.api.get_line_items(1)
+        self.assertEqual(len(responses.calls), 1)
+        self.assertEqual(responses.calls[0].response.json(), line_item_json)
+
+    @responses.activate
     def test_get_line_item_detailed_report(self):
         with open('./tests/test_files/get_line_item_detailed_report.json', 'r') as line_item_detailed_report_file:
             line_item_detailed_report_json = json.load(line_item_detailed_report_file)
