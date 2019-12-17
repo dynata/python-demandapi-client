@@ -28,3 +28,12 @@ class TestEventEndpoints(unittest.TestCase):
         self.api.get_event(1337)
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.json(), event_json)
+
+    @responses.activate
+    def test_get_events(self):
+        with open('./tests/test_files/get_events.json', 'r') as event_file:
+            event_json = json.load(event_file)
+        responses.add(responses.GET, '{}/sample/v1/events'.format(BASE_HOST), json=event_json, status=200)
+        self.api.get_events()
+        self.assertEqual(len(responses.calls), 1)
+        self.assertEqual(responses.calls[0].response.json(), event_json)

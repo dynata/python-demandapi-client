@@ -137,6 +137,9 @@ class DemandAPIClient(object):
     def get_event(self, event_id):
         return self._api_get('/events/{}'.format(event_id))
 
+    def get_events(self):
+        return self._api_get('/events')
+
     def create_project(self, project_data):
         # Creates a new project. Uses the "new project" schema.
         self._validate_object("project_new", project_data)
@@ -152,8 +155,11 @@ class DemandAPIClient(object):
     def get_project(self, project_id):
         return self._api_get('/projects/{}'.format(project_id))
 
-    def get_lineitem(self, project_id, lineitem_id):
-        return self._api_get('/projects/{}/lineItems/{}'.format(project_id, lineitem_id))
+    def get_line_item(self, project_id, line_item_id):
+        return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
+
+    def get_line_items(self, project_id):
+        return self._api_get('/projects/{}/lineItems'.format(project_id))
 
     def get_feasibility(self, project_id):
         return self._api_get('/projects/{}/feasibility'.format(project_id))
