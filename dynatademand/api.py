@@ -134,6 +134,9 @@ class DemandAPIClient(object):
             ))
         return logout_response.json()
 
+    def get_countries(self):
+        return self._api_get('/countries')
+
     def get_event(self, event_id):
         return self._api_get('/events/{}'.format(event_id))
 
