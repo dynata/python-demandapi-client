@@ -170,5 +170,8 @@ class DemandAPIClient(object):
     def get_feasibility(self, project_id):
         return self._api_get('/projects/{}/feasibility'.format(project_id))
 
+    def get_survey_topics(self):
+        return self._api_get('/categories/surveyTopics')
+
     def get_sources(self):
         return self._api_get('/sources')
