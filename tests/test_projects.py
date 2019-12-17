@@ -30,6 +30,24 @@ class TestProjectEndpoints(unittest.TestCase):
         self.assertEqual(responses.calls[0].response.json(), project_json)
 
     @responses.activate
+    def test_get_projects(self):
+        with open('./tests/test_files/get_projects.json', 'r') as project_file:
+            project_json = json.load(project_file)
+        responses.add(responses.GET, '{}/sample/v1/projects'.format(BASE_HOST), json=project_json, status=200)
+        self.api.get_projects()
+        self.assertEqual(len(responses.calls), 1)
+        self.assertEqual(responses.calls[0].response.json(), project_json)
+
+    @responses.activate
+    def test_get_project_detailed_report(self):
+        with open('./tests/test_files/get_project_detailed_report.json', 'r') as project_detailed_report_file:
+            project_detailed_report_json = json.load(project_detailed_report_file)
+        responses.add(responses.GET, '{}/sample/v1/projects/1/detailedReport'.format(BASE_HOST), json=project_detailed_report_json, status=200)
+        self.api.get_project_detailed_report(1)
+        self.assertEqual(len(responses.calls), 1)
+        self.assertEqual(responses.calls[0].response.json(), project_detailed_report_json)
+
+    @responses.activate
     def test_create_project(self):
         # Tests creating a project. This also tests validating the project data as part of `api.create_project`.
         with open('./tests/test_files/examples/project_new.json', 'r') as new_project_file:
