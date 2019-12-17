@@ -134,6 +134,9 @@ class DemandAPIClient(object):
             ))
         return logout_response.json()
 
+    def get_attributes(self, country_code, language_code):
+        return self._api_get('/attributes/{}/{}'.format(country_code, language_code))
+
     def get_countries(self):
         return self._api_get('/countries')
 
