@@ -134,6 +134,12 @@ class DemandAPIClient(object):
             ))
         return logout_response.json()
 
+    def get_event(self, event_id):
+        return self._api_get('/events/{}'.format(event_id))
+
+    def get_events(self):
+        return self._api_get('/events')
+
     def create_project(self, project_data):
         # Creates a new project. Uses the "new project" schema.
         self._validate_object("project_new", project_data)
