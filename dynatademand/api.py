@@ -167,6 +167,17 @@ class DemandAPIClient(object):
     def get_project_detailed_report(self, project_id):
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
+    def launch_line_item(self, project_id, line_item_id):
+        # Starts traffic to a line item.
+        response_data = self._api_post('/projects/{}/lineItems/{}/launch'.format(project_id, line_item_id), {})
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not close project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
     def get_line_item(self, project_id, line_item_id):
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
 

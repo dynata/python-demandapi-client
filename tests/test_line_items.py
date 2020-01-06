@@ -11,6 +11,7 @@ except ImportError:
     from mock import patch
 
 from dynatademand.api import DemandAPIClient
+from dynatademand.errors import DemandAPIError
 
 BASE_HOST = "http://test-url.example"
 
@@ -46,3 +47,14 @@ class TestLineItemEndpoints(unittest.TestCase):
         self.api.get_line_item_detailed_report(1, 100)
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.json(), line_item_detailed_report_json)
+
+    @responses.activate
+    def test_launch_lineitem(self):
+        # Tests closing a project.
+        responses.add(responses.POST, '{}/sample/v1/projects/24/lineItems/180/launch'.format(BASE_HOST), json={'status': {'message': 'success'}}, status=200)
+        responses.add(responses.POST, '{}/sample/v1/projects/24/lineItems/180/launch'.format(BASE_HOST), json={'status': {'message': 'error'}}, status=200)
+        self.api.launch_line_item(24, 180)
+        self.assertEqual(len(responses.calls), 1)
+        with self.assertRaises(DemandAPIError):
+            self.api.launch_line_item(24, 180)
+        self.assertEqual(len(responses.calls), 2)
