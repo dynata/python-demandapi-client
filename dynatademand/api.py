@@ -7,6 +7,7 @@ from .errors import DemandAPIError
 
 SCHEMAS = [
     "project_new",
+    "project_buy",
 ]
 
 
@@ -50,7 +51,7 @@ class DemandAPIClient(object):
     def _validate_object(self, schema_type, data):
         # jsonschema.validate will return none if there is no error,
         # otherwise it will raise its' own error with details on the failure.
-        jsonschema.validate(self._schemas[schema_type], data)
+        jsonschema.validate(schema=self._schemas[schema_type], instance=data)
 
     def _check_authentication(self):
         # This doesn't check if the access token is valid, just that it exists.
@@ -153,6 +154,22 @@ class DemandAPIClient(object):
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
                 "Could not create project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
+    def buy_project(self, project_id, buy_data):
+        '''
+            Buy the line items for a project, agreeing to the price. A Line Item
+            can only be bought if the feasibility for the line item is in status=READY
+            and totalCount > 0.
+        '''
+        self._validate_object("project_buy", buy_data)
+        response_data = self._api_post('/projects/{}/buy'.format(project_id), buy_data)
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not buy project. Demand API responded with: {}".format(
                     response_data
                 )
             )

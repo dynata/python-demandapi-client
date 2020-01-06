@@ -28,18 +28,18 @@
     "devices": {
       "type": "array",
       "description": "Device targeting for the project",
-      "enum": [
-        "mobile",
-        "desktop",
-        "tablet"
-      ],
       "default": [
         "mobile",
         "desktop",
         "tablet"
       ],
       "items": {
-        "type": "string"
+        "type": "string",
+        "enum": [
+          "mobile",
+          "desktop",
+          "tablet"
+        ]
       }
     },
     "category": {

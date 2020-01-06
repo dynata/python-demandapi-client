@@ -11,6 +11,7 @@ except ImportError:
     from mock import patch
 
 from dynatademand.api import DemandAPIClient
+from dynatademand.errors import DemandAPIError
 
 BASE_HOST = "http://test-url.example"
 
@@ -55,3 +56,20 @@ class TestProjectEndpoints(unittest.TestCase):
         responses.add(responses.POST, '{}/sample/v1/projects'.format(BASE_HOST), json={'status': {'message': 'success'}}, status=200)
         self.api.create_project(new_project_data)
         self.assertEqual(len(responses.calls), 1)
+
+    @responses.activate
+    def test_buy_project(self):
+        # Tests buying a project.
+        with open('./tests/test_files/examples/project_buy.json', 'r') as buy_project_file:
+            buy_project_data = json.load(buy_project_file)
+        # Success response
+        responses.add(responses.POST, '{}/sample/v1/projects/24/buy'.format(BASE_HOST), json={'status': {'message': 'success'}}, status=200)
+        # Response with error status
+        responses.add(responses.POST, '{}/sample/v1/projects/24/buy'.format(BASE_HOST), json={'status': {'message': 'error'}}, status=200)
+        # Test success response
+        self.api.buy_project(24, buy_project_data)
+        self.assertEqual(len(responses.calls), 1)
+        # Test error response
+        with self.assertRaises(DemandAPIError):
+            self.api.buy_project(24, buy_project_data)
+        self.assertEqual(len(responses.calls), 2)
