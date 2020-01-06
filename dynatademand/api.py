@@ -158,6 +158,18 @@ class DemandAPIClient(object):
             )
         return response_data
 
+    def close_project(self, project_id):
+        # Closes the requested project. Once a project is closed, all traffic
+        # is stopped, and the project is automatically sent for invoicing.
+        response_data = self._api_post('/projects/{}/close'.format(project_id), {})
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not close project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
     def get_project(self, project_id):
         return self._api_get('/projects/{}'.format(project_id))
 
