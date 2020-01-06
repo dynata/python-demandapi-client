@@ -7,6 +7,7 @@ from .errors import DemandAPIError
 
 SCHEMAS = [
     "project_new",
+    "lineitem_new",
 ]
 
 
@@ -166,6 +167,25 @@ class DemandAPIClient(object):
 
     def get_project_detailed_report(self, project_id):
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
+
+    def add_line_item(self, project_id, lineitem_data):
+        '''
+            A line item is a project entity that exist for a specific market and
+            language that your survey is aimed at. It defines the target panelists
+            for the market that the survey is looking for, and the number of
+            completes required. A line item is our unit of work and is what
+            gets billed to you.
+        '''
+        # Creates a new line item. Uses the "new lineitem" schema.
+        self._validate_object("lineitem_new", lineitem_data)
+        response_data = self._api_post('/projects/{}/lineItems'.format(project_id), lineitem_data)
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not add line item. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
 
     def get_line_item(self, project_id, line_item_id):
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
