@@ -168,7 +168,6 @@ class DemandAPIClient(object):
     def update_project(self, project_id, update_data):
         self._validate_object("project_update", update_data)
         response_data = self._api_post('/projects/{}'.format(project_id), update_data)
-        print(response_data.get('status').get('message'))
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
                 "Could not update project. Demand API responded with: {}".format(
