@@ -63,9 +63,17 @@ class TestProjectEndpoints(unittest.TestCase):
         with open('./tests/test_files/examples/project_buy.json', 'r') as buy_project_file:
             buy_project_data = json.load(buy_project_file)
         # Success response
-        responses.add(responses.POST, '{}/sample/v1/projects/24/buy'.format(BASE_HOST), json={'status': {'message': 'success'}}, status=200)
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/buy'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200)
         # Response with error status
-        responses.add(responses.POST, '{}/sample/v1/projects/24/buy'.format(BASE_HOST), json={'status': {'message': 'error'}}, status=200)
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/buy'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200)
         # Test success response
         self.api.buy_project(24, buy_project_data)
         self.assertEqual(len(responses.calls), 1)
