@@ -57,10 +57,20 @@ class TestLineItemEndpoints(unittest.TestCase):
             update_lineitem_data = json.load(new_lineitem_file)
         
         # Success response
-        responses.add(responses.POST, '{}/sample/v1/projects/1/lineItems/1'.format(BASE_HOST), json={'status': {'message': 'success'}}, status=200)
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/1/lineItems/1'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200
+        )
         # Response with error status
-        responses.add(responses.POST, '{}/sample/v1/projects/1/lineItems/1'.format(BASE_HOST), json={'status': {'message': 'error'}}, status=200)
-        
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/1/lineItems/1'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200
+        )
+
         # Test success response
         self.api.update_line_item(1, 1, update_lineitem_data)
         self.assertEqual(len(responses.calls), 1)
