@@ -64,9 +64,17 @@ class TestProjectEndpoints(unittest.TestCase):
             update_project_data = json.load(update_project_file)
 
         # Success response
-        responses.add(responses.POST, '{}/sample/v1/projects/24'.format(BASE_HOST), json={'status': {'message': 'success'}}, status=200)
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200)
         # Error message included
-        responses.add(responses.POST, '{}/sample/v1/projects/24'.format(BASE_HOST), json={'status': {'message': 'error'}}, status=200)
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200)
 
         # Test successful response.
         self.api.update_project(24, update_project_data)
