@@ -6,7 +6,20 @@ import requests
 from .errors import DemandAPIError
 
 SCHEMAS = [
-    "project_new",
+    'create_project',
+    'get_attributes',
+    'get_countries',
+    'get_event',
+    'get_events',
+    'get_feasibility',
+    'get_line_item',
+    'get_line_items',
+    'get_line_item_detailed_report',
+    'get_project',
+    'get_projects',
+    'get_project_detailed_report',
+    'get_survey_topics',
+    'get_sources',
 ]
 
 
@@ -30,7 +43,7 @@ class DemandAPIClient(object):
             self.base_host = os.getenv('DYNATA_DEMAND_BASE_URL', default='https://api.researchnow.com')
 
         if None in [self.client_id, self.username, self.password]:
-            raise DemandAPIError("All authentication data is required.")
+            raise DemandAPIError('All authentication data is required.')
 
         self._access_token = None
         self._refresh_token = None
@@ -50,7 +63,7 @@ class DemandAPIClient(object):
     def _validate_object(self, schema_type, data):
         # jsonschema.validate will return none if there is no error,
         # otherwise it will raise its' own error with details on the failure.
-        jsonschema.validate(self._schemas[schema_type], data)
+        jsonschema.validate(schema=self._schemas[schema_type], instance=data)
 
     def _check_authentication(self):
         # This doesn't check if the access token is valid, just that it exists.
@@ -113,7 +126,7 @@ class DemandAPIClient(object):
             'refreshToken': self._refresh_token
         })
         if refresh_response.status_code != 200:
-            raise DemandAPIError("Refreshing Access Token failed with status {} and error: {}".format(
+            raise DemandAPIError('Refreshing Access Token failed with status {} and error: {}'.format(
                 refresh_response.status_code, refresh_response.content
             ))
         response_data = refresh_response.json()
@@ -129,58 +142,71 @@ class DemandAPIClient(object):
             'accessToken': self._access_token
         })
         if logout_response.status_code != 204:
-            raise DemandAPIError("Log out failed with status {} and error: {}".format(
+            raise DemandAPIError('Log out failed with status {} and error: {}'.format(
                 logout_response.status_code, logout_response.content
             ))
         return logout_response.json()
 
     def get_attributes(self, country_code, language_code):
+        self._validate_object('get_attributes', {'countryCode': country_code, 'languageCode': language_code})
         return self._api_get('/attributes/{}/{}'.format(country_code, language_code))
 
     def get_countries(self):
+        self._validate_object('get_countries', {})
         return self._api_get('/countries')
 
     def get_event(self, event_id):
+        self._validate_object('get_event', {event_id})
         return self._api_get('/events/{}'.format(event_id))
 
     def get_events(self):
+        self._validate_object('get_events', {})
         return self._api_get('/events')
 
     def create_project(self, project_data):
-        # Creates a new project. Uses the "new project" schema.
-        self._validate_object("project_new", project_data)
+        # Creates a new project. Uses the "create project" schema.
+        self._validate_object('create_project', project_data)
         response_data = self._api_post('/projects', project_data)
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
-                "Could not create project. Demand API responded with: {}".format(
+                'Could not create project. Demand API responded with: {}'.format(
                     response_data
                 )
             )
         return response_data
 
     def get_project(self, project_id):
+        self._validate_object('get_project', {project_id})
         return self._api_get('/projects/{}'.format(project_id))
 
     def get_projects(self):
+        self._validate_object('get_projects', {})
         return self._api_get('/projects')
 
     def get_project_detailed_report(self, project_id):
+        self._validate_object('get_project_detailed_report', project_id)
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
     def get_line_item(self, project_id, line_item_id):
+        self._validate_object('get_line_item', {project_id, line_item_id})
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
 
     def get_line_items(self, project_id):
+        self._validate_object('get_line_items', project_id)
         return self._api_get('/projects/{}/lineItems'.format(project_id))
 
     def get_line_item_detailed_report(self, project_id, line_item_id):
+        self._validate_object('get_line_item_detailed_report', {project_id, line_item_id})
         return self._api_get('/projects/{}/lineItems/{}/detailedReport'.format(project_id, line_item_id))
 
     def get_feasibility(self, project_id):
+        self._validate_object('get_feasibility', project_id)
         return self._api_get('/projects/{}/feasibility'.format(project_id))
 
     def get_survey_topics(self):
+        self._validate_object('get_survey_topics', {})
         return self._api_get('/categories/surveyTopics')
 
     def get_sources(self):
+        # the get sources endpoint has no request schemas
         return self._api_get('/sources')

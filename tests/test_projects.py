@@ -50,7 +50,7 @@ class TestProjectEndpoints(unittest.TestCase):
     @responses.activate
     def test_create_project(self):
         # Tests creating a project. This also tests validating the project data as part of `api.create_project`.
-        with open('./tests/test_files/examples/project_new.json', 'r') as new_project_file:
+        with open('./tests/test_files/create_project.json', 'r') as new_project_file:
             new_project_data = json.load(new_project_file)
         responses.add(responses.POST, '{}/sample/v1/projects'.format(BASE_HOST), json={'status': {'message': 'success'}}, status=200)
         self.api.create_project(new_project_data)

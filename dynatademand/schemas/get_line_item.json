@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "extProjectId": {
+      "type": "string",
+      "required": true
+    },
+    "extLineItemId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "required": [
+    "extProjectId",
+    "extLineItemId"
+  ]
+}
