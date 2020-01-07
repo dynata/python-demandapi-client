@@ -1,6 +1,6 @@
 # python-demandapi-client
 
-<a href="https://github.com/dynata/python-demandapi-client"><img alt="GitHub Actions status" src="https://github.com/dynata/python-demandapi-client/workflows/python-package/badge.svg"></a>
+<a href="https://github.com/dynata/python-demandapi-client"><img alt="GitHub Actions status" src="https://github.com/dynata/python-demandapi-client/workflows/python-tests/badge.svg"></a>
 
 A Python client library for the [Dynata Demand API](https://developers.dynata.com/)
 ## Setup
