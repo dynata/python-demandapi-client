@@ -7,7 +7,8 @@ This is an InnerSource python project. It is the work of someone who thought it 
 This repository is maintained by
 
 1. [Ridley Larsen](@RidleyLarsen)
-1. [Bradley Wogsland](@wogsland)
+2. [Bradley Wogsland](@wogsland)
+3. [Nathan Workman](@nathanworkman)
 
 ### Community Guidelines
 
