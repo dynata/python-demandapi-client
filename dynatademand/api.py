@@ -87,6 +87,8 @@ class DemandAPIClient(object):
             schema = self._request_path_schemas[schema_type]
         elif 'request_query' == object_type:
             schema = self._request_query_schemas[schema_type]
+        print('data to test in _validate_object:')
+        print(data)
         jsonschema.validate(schema=schema, instance=data)
 
     def _check_authentication(self):
@@ -172,7 +174,7 @@ class DemandAPIClient(object):
         return logout_response.json()
 
     def get_attributes(self, country_code, language_code):
-        self._validate_object('request_path', 'get_attributes', {'countryCode': country_code, 'languageCode': language_code})
+        # self._validate_object('request_path', 'get_attributes', {'countryCode': country_code, 'languageCode': language_code})
         self._validate_object('request_query', 'get_attributes', {})
         return self._api_get('/attributes/{}/{}'.format(country_code, language_code))
 
@@ -181,7 +183,7 @@ class DemandAPIClient(object):
         return self._api_get('/countries')
 
     def get_event(self, event_id):
-        self._validate_object('request_path', 'get_event', {event_id})
+        # self._validate_object('request_path', 'get_event', {'eventId': event_id})
         return self._api_get('/events/{}'.format(event_id))
 
     def get_events(self):
@@ -200,7 +202,7 @@ class DemandAPIClient(object):
         return response_data
 
     def get_project(self, project_id):
-        self._validate_object('request_path', 'get_project', {project_id})
+        # self._validate_object('request_path', 'get_project', {'extProjectId': project_id})
         return self._api_get('/projects/{}'.format(project_id))
 
     def get_projects(self):
@@ -208,24 +210,24 @@ class DemandAPIClient(object):
         return self._api_get('/projects')
 
     def get_project_detailed_report(self, project_id):
-        self._validate_object('request_path', 'get_project_detailed_report', {'extProjectId': str(project_id)})
+        # self._validate_object('request_path', 'get_project_detailed_report', {'extProjectId': project_id})
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
     def get_line_item(self, project_id, line_item_id):
-        self._validate_object('request_path', 'get_line_item', {project_id, line_item_id})
+        # self._validate_object('request_path', 'get_line_item', {'extProjectId': project_id, 'extLineItemId': line_item_id})
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
 
     def get_line_items(self, project_id):
-        self._validate_object('request_path', 'get_line_items', project_id)
+        # self._validate_object('request_path', 'get_line_items', {'extProjectId': project_id})
         self._validate_object('request_query', 'get_line_items', {})
         return self._api_get('/projects/{}/lineItems'.format(project_id))
 
     def get_line_item_detailed_report(self, project_id, line_item_id):
-        self._validate_object('request_path', 'get_line_item_detailed_report', {project_id, line_item_id})
+        # self._validate_object('request_path', 'get_line_item_detailed_report', {'extProjectId': project_id, 'extLineItemId': line_item_id})
         return self._api_get('/projects/{}/lineItems/{}/detailedReport'.format(project_id, line_item_id))
 
     def get_feasibility(self, project_id):
-        self._validate_object('request_path', 'get_feasibility', project_id)
+        # self._validate_object('request_path', 'get_feasibility', {'extProjectId': project_id})
         return self._api_get('/projects/{}/feasibility'.format(project_id))
 
     def get_survey_topics(self):
