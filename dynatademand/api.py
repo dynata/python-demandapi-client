@@ -5,21 +5,28 @@ import requests
 
 from .errors import DemandAPIError
 
-SCHEMAS = [
+REQUEST_BODY_SCHEMAS = [
     'create_project',
+]
+
+REQUEST_PATH_SCHEMAS = [
     'get_attributes',
-    'get_countries',
     'get_event',
-    'get_events',
     'get_feasibility',
     'get_line_item',
-    'get_line_items',
     'get_line_item_detailed_report',
+    'get_line_items',
     'get_project',
-    'get_projects',
     'get_project_detailed_report',
+]
+
+REQUEST_QUERY_SCHEMAS = [
+    'get_attributes',
+    'get_countries',
+    'get_events',
+    'get_line_items',
+    'get_projects',
     'get_survey_topics',
-    'get_sources',
 ]
 
 
@@ -54,16 +61,33 @@ class DemandAPIClient(object):
 
     def _load_schemas(self):
         # Load the compiled schemas for use in validation.
-        self._schemas = {}
-        for schema_type in SCHEMAS:
-            schema_file = open('dynatademand/schemas/{}.json'.format(schema_type), 'r')
-            self._schemas[schema_type] = json.load(schema_file)
+        self._request_body_schemas = {}
+        for schema_type in REQUEST_BODY_SCHEMAS:
+            schema_file = open('dynatademand/schemas/request/body/{}.json'.format(schema_type), 'r')
+            self._request_body_schemas[schema_type] = json.load(schema_file)
+            schema_file.close()
+        self._request_path_schemas = {}
+        for schema_type in REQUEST_PATH_SCHEMAS:
+            schema_file = open('dynatademand/schemas/request/path/{}.json'.format(schema_type), 'r')
+            self._request_path_schemas[schema_type] = json.load(schema_file)
+            schema_file.close()
+        self._request_query_schemas = {}
+        for schema_type in REQUEST_QUERY_SCHEMAS:
+            schema_file = open('dynatademand/schemas/request/query/{}.json'.format(schema_type), 'r')
+            self._request_query_schemas[schema_type] = json.load(schema_file)
             schema_file.close()
 
-    def _validate_object(self, schema_type, data):
+    def _validate_object(self, object_type, schema_type, data):
         # jsonschema.validate will return none if there is no error,
         # otherwise it will raise its' own error with details on the failure.
-        jsonschema.validate(schema=self._schemas[schema_type], instance=data)
+        schema = ''
+        if 'request_body' == object_type:
+            schema = self._request_body_schemas[schema_type]
+        elif 'request_path' == object_type:
+            schema = self._request_path_schemas[schema_type]
+        elif 'request_query' == object_type:
+            schema = self._request_query_schemas[schema_type]
+        jsonschema.validate(schema=schema, instance=data)
 
     def _check_authentication(self):
         # This doesn't check if the access token is valid, just that it exists.
@@ -148,24 +172,24 @@ class DemandAPIClient(object):
         return logout_response.json()
 
     def get_attributes(self, country_code, language_code):
-        self._validate_object('get_attributes', {'countryCode': country_code, 'languageCode': language_code})
+        self._validate_object('request_path', 'get_attributes', {'countryCode': country_code, 'languageCode': language_code})
+        self._validate_object('request_query', 'get_attributes', {})
         return self._api_get('/attributes/{}/{}'.format(country_code, language_code))
 
     def get_countries(self):
-        self._validate_object('get_countries', {})
+        self._validate_object('request_query', 'get_countries', {})
         return self._api_get('/countries')
 
     def get_event(self, event_id):
-        self._validate_object('get_event', {event_id})
+        self._validate_object('request_path', 'get_event', {event_id})
         return self._api_get('/events/{}'.format(event_id))
 
     def get_events(self):
-        self._validate_object('get_events', {})
+        self._validate_object('request_query', 'get_events', {})
         return self._api_get('/events')
 
     def create_project(self, project_data):
-        # Creates a new project. Uses the "create project" schema.
-        self._validate_object('create_project', project_data)
+        # self._validate_object('request_body', 'create_project', project_data)
         response_data = self._api_post('/projects', project_data)
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
@@ -176,35 +200,36 @@ class DemandAPIClient(object):
         return response_data
 
     def get_project(self, project_id):
-        self._validate_object('get_project', {project_id})
+        self._validate_object('request_path', 'get_project', {project_id})
         return self._api_get('/projects/{}'.format(project_id))
 
     def get_projects(self):
-        self._validate_object('get_projects', {})
+        self._validate_object('request_query', 'get_projects', {})
         return self._api_get('/projects')
 
     def get_project_detailed_report(self, project_id):
-        self._validate_object('get_project_detailed_report', project_id)
+        self._validate_object('request_path', 'get_project_detailed_report', {'extProjectId': str(project_id)})
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
     def get_line_item(self, project_id, line_item_id):
-        self._validate_object('get_line_item', {project_id, line_item_id})
+        self._validate_object('request_path', 'get_line_item', {project_id, line_item_id})
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
 
     def get_line_items(self, project_id):
-        self._validate_object('get_line_items', project_id)
+        self._validate_object('request_path', 'get_line_items', project_id)
+        self._validate_object('request_query', 'get_line_items', {})
         return self._api_get('/projects/{}/lineItems'.format(project_id))
 
     def get_line_item_detailed_report(self, project_id, line_item_id):
-        self._validate_object('get_line_item_detailed_report', {project_id, line_item_id})
+        self._validate_object('request_path', 'get_line_item_detailed_report', {project_id, line_item_id})
         return self._api_get('/projects/{}/lineItems/{}/detailedReport'.format(project_id, line_item_id))
 
     def get_feasibility(self, project_id):
-        self._validate_object('get_feasibility', project_id)
+        self._validate_object('request_path', 'get_feasibility', project_id)
         return self._api_get('/projects/{}/feasibility'.format(project_id))
 
     def get_survey_topics(self):
-        self._validate_object('get_survey_topics', {})
+        self._validate_object('request_query', 'get_survey_topics', {})
         return self._api_get('/categories/surveyTopics')
 
     def get_sources(self):
