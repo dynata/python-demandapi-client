@@ -54,9 +54,17 @@ class TestLineItemEndpoints(unittest.TestCase):
         with open('./tests/test_files/examples/lineitem_new.json', 'r') as new_lineitem_file:
             new_lineitem_data = json.load(new_lineitem_file)
         # Success response
-        responses.add(responses.POST, '{}/sample/v1/projects/24/lineItems'.format(BASE_HOST), json={'status': {'message': 'success'}}, status=200)
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/lineItems'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200)
         # Response with error status
-        responses.add(responses.POST, '{}/sample/v1/projects/24/lineItems'.format(BASE_HOST), json={'status': {'message': 'error'}}, status=200)
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/lineItems'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200)
         # Test success response
         self.api.add_line_item(24, new_lineitem_data)
         self.assertEqual(len(responses.calls), 1)
