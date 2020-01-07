@@ -223,7 +223,13 @@ class DemandAPIClient(object):
         return self._api_get('/projects/{}/lineItems'.format(project_id))
 
     def get_line_item_detailed_report(self, project_id, line_item_id):
-        # self._validate_object('request_path', 'get_line_item_detailed_report', {'extProjectId': project_id, 'extLineItemId': line_item_id})
+        """
+        self._validate_object(
+            'request_path',
+            'get_line_item_detailed_report',
+            {'extProjectId': project_id, 'extLineItemId': line_item_id}
+        )
+        """
         return self._api_get('/projects/{}/lineItems/{}/detailedReport'.format(project_id, line_item_id))
 
     def get_feasibility(self, project_id):
