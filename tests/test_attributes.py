@@ -5,11 +5,6 @@ import json
 import unittest
 import responses
 
-try:
-    from unittest.mock import patch
-except ImportError:
-    from mock import patch
-
 from dynatademand.api import DemandAPIClient
 
 BASE_HOST = "http://test-url.example"

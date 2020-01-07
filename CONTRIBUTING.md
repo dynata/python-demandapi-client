@@ -24,6 +24,14 @@ Linting software is strongly recommended to improve code quality and maintain re
 
 Read more [here](http://flake8.pycqa.org/en/latest/)
 
+To lint the files,
+
+    virtualenv venv
+    . venv/bin/activate
+    pip install flake8
+    flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
+    deactivate
+
 ### Testing
 
 To run the tests,

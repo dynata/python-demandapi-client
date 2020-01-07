@@ -5,11 +5,6 @@ import json
 import unittest
 import responses
 
-try:
-    from unittest.mock import patch
-except ImportError:
-    from mock import patch
-
 from dynatademand.api import DemandAPIClient
 from dynatademand.errors import DemandAPIError
 
@@ -25,7 +20,11 @@ class TestLineItemEndpoints(unittest.TestCase):
     def test_get_line_item(self):
         with open('./tests/test_files/get_line_item.json', 'r') as line_item_file:
             line_item_json = json.load(line_item_file)
-        responses.add(responses.GET, '{}/sample/v1/projects/1/lineItems/100'.format(BASE_HOST), json=line_item_json, status=200)
+        responses.add(
+            responses.GET,
+            '{}/sample/v1/projects/1/lineItems/100'.format(BASE_HOST),
+            json=line_item_json,
+            status=200)
         self.api.get_line_item(1, 100)
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.json(), line_item_json)
@@ -43,7 +42,11 @@ class TestLineItemEndpoints(unittest.TestCase):
     def test_get_line_item_detailed_report(self):
         with open('./tests/test_files/get_line_item_detailed_report.json', 'r') as line_item_detailed_report_file:
             line_item_detailed_report_json = json.load(line_item_detailed_report_file)
-        responses.add(responses.GET, '{}/sample/v1/projects/1/lineItems/100/detailedReport'.format(BASE_HOST), json=line_item_detailed_report_json, status=200)
+        responses.add(
+            responses.GET,
+            '{}/sample/v1/projects/1/lineItems/100/detailedReport'.format(BASE_HOST),
+            json=line_item_detailed_report_json,
+            status=200)
         self.api.get_line_item_detailed_report(1, 100)
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.json(), line_item_detailed_report_json)
