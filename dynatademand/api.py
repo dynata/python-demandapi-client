@@ -224,7 +224,7 @@ class DemandAPIClient(object):
             Updates the specified line item by setting the values of the parameters passed.
             Any parameters not provided will be left unchanged.
         '''
-        # self._validate_object('request_path', 'update_line_item', {'extProjectId': project_id, 'extLineItemId': line_item_id})
+        # self._validate_object('request_path','update_line_item', {'extProjectId': project_id, 'extLineItemId': line_item_id})
         self._validate_object('request_body', 'update_line_item', line_item_data)
         response_data = self._api_post('/projects/{}/lineItems/{}'.format(project_id, line_item_id), line_item_data)
         if response_data.get('status').get('message') != 'success':
