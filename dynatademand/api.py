@@ -4,6 +4,7 @@ import os
 import requests
 
 from .errors import DemandAPIError
+from jsonschema.validators import ValidationError
 
 REQUEST_BODY_SCHEMAS = [
     'create_project',
@@ -89,8 +90,6 @@ class DemandAPIClient(object):
             schema = self._request_path_schemas[schema_type]
         elif 'request_query' == object_type:
             schema = self._request_query_schemas[schema_type]
-        print('data to test in _validate_object:')
-        print(data)
         jsonschema.validate(schema=schema, instance=data)
 
     def _check_authentication(self):
@@ -176,24 +175,31 @@ class DemandAPIClient(object):
         return logout_response.json()
 
     def get_attributes(self, country_code, language_code):
-        # self._validate_object('request_path', 'get_attributes', {'countryCode': country_code, 'languageCode': language_code})
-        self._validate_object('request_query', 'get_attributes', {})
+        # Validate path
+        self._validate_object('request_path', 'get_attributes', {
+            'countryCode': '{}'.format(country_code),
+            'languageCode': '{}'.format(language_code)
+        })
+        # No query or request body schemas to validate.
         return self._api_get('/attributes/{}/{}'.format(country_code, language_code))
 
     def get_countries(self):
-        self._validate_object('request_query', 'get_countries', {})
+        # No schemas to validate.
         return self._api_get('/countries')
 
     def get_event(self, event_id):
-        # self._validate_object('request_path', 'get_event', {'eventId': event_id})
+        # Validate path
+        self._validate_object('request_path', 'get_event', {'eventId': '{}'.format(event_id)})
         return self._api_get('/events/{}'.format(event_id))
 
     def get_events(self):
-        self._validate_object('request_query', 'get_events', {})
+        # No schemas to validate.
         return self._api_get('/events')
 
     def create_project(self, project_data):
-        # self._validate_object('request_body', 'create_project', project_data)
+        # Validate request body
+        self._validate_object('request_body', 'create_project', project_data)
+        # No path or query schemas to validate.
         response_data = self._api_post('/projects', project_data)
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
@@ -204,19 +210,31 @@ class DemandAPIClient(object):
         return response_data
 
     def get_project(self, project_id):
-        # self._validate_object('request_path', 'get_project', {'extProjectId': project_id})
+        # Validate path
+        self._validate_object('request_path', 'get_project', {
+            'extProjectId': '{}'.format(project_id)
+        })
         return self._api_get('/projects/{}'.format(project_id))
 
     def get_projects(self):
-        self._validate_object('request_query', 'get_projects', {})
+        # No schemas to validate.
         return self._api_get('/projects')
 
     def get_project_detailed_report(self, project_id):
-        # self._validate_object('request_path', 'get_project_detailed_report', {'extProjectId': project_id})
+        # Validate path
+        self._validate_object('request_path', 'get_project_detailed_report', {
+            'extProjectId': '{}'.format(project_id)
+        })
+        # No query or request body to validate.
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
     def get_line_item(self, project_id, line_item_id):
-        # self._validate_object('request_path', 'get_line_item', {'extProjectId': project_id, 'extLineItemId': line_item_id})
+        # Validate path
+        self._validate_object('request_path', 'get_line_item', {
+            'extProjectId': '{}'.format(project_id),
+            'extLineItemId': '{}'.format(line_item_id)
+        })
+        # No query or request body to validate.
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
 
     def update_line_item(self, project_id, line_item_id, line_item_data):
@@ -236,28 +254,34 @@ class DemandAPIClient(object):
         return response_data
 
     def get_line_items(self, project_id):
-        # self._validate_object('request_path', 'get_line_items', {'extProjectId': project_id})
-        self._validate_object('request_query', 'get_line_items', {})
+        # Validate path
+        self._validate_object('request_path', 'get_line_items', {
+            'extProjectId': '{}'.format(project_id)
+        })
+        # No query or request body to validate.
         return self._api_get('/projects/{}/lineItems'.format(project_id))
 
     def get_line_item_detailed_report(self, project_id, line_item_id):
-        """
-        self._validate_object(
-            'request_path',
-            'get_line_item_detailed_report',
-            {'extProjectId': project_id, 'extLineItemId': line_item_id}
-        )
-        """
+        # Validate path
+        self._validate_object('request_path', 'get_line_item_detailed_report', {
+            'extProjectId': '{}'.format(project_id),
+            'extLineItemId': '{}'.format(line_item_id),
+        })
+        # No query or request body to validate.
         return self._api_get('/projects/{}/lineItems/{}/detailedReport'.format(project_id, line_item_id))
 
     def get_feasibility(self, project_id):
-        # self._validate_object('request_path', 'get_feasibility', {'extProjectId': project_id})
+        # Validate path
+        self._validate_object('request_path', 'get_feasibility', {
+            'extProjectId': '{}'.format(project_id)
+        })
+        # No query or request body to validate.
         return self._api_get('/projects/{}/feasibility'.format(project_id))
 
     def get_survey_topics(self):
-        self._validate_object('request_query', 'get_survey_topics', {})
+        # No schemas to validate.
         return self._api_get('/categories/surveyTopics')
 
     def get_sources(self):
-        # the get sources endpoint has no request schemas
+        # No schemas to validate.
         return self._api_get('/sources')

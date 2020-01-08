@@ -2,8 +2,7 @@
   "type": "object",
   "properties": {
     "extProjectId": {
-      "type": "string",
-      "required": true
+      "type": "string"
     }
   },
   "required": [
