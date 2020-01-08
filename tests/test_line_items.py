@@ -6,6 +6,7 @@ import unittest
 import responses
 
 from dynatademand.api import DemandAPIClient
+from dynatademand.errors import DemandAPIError
 
 BASE_HOST = "http://test-url.example"
 
@@ -49,3 +50,32 @@ class TestLineItemEndpoints(unittest.TestCase):
         self.api.get_line_item_detailed_report(1, 100)
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.json(), line_item_detailed_report_json)
+
+    @responses.activate
+    def test_update_line_item(self):
+        with open('./tests/test_files/update_line_item.json', 'r') as new_lineitem_file:
+            update_lineitem_data = json.load(new_lineitem_file)
+
+        # Success response
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/1/lineItems/1'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200
+        )
+        # Response with error status
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/1/lineItems/1'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200
+        )
+
+        # Test success response
+        self.api.update_line_item(1, 1, update_lineitem_data)
+        self.assertEqual(len(responses.calls), 1)
+
+        # Test error response
+        with self.assertRaises(DemandAPIError):
+            self.api.update_line_item(1, 1, update_lineitem_data)
+            self.assertEqual(len(responses.calls), 2)

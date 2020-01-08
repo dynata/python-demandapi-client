@@ -7,6 +7,7 @@ from .errors import DemandAPIError
 
 REQUEST_BODY_SCHEMAS = [
     'create_project',
+    'update_line_item',
 ]
 
 REQUEST_PATH_SCHEMAS = [
@@ -18,6 +19,7 @@ REQUEST_PATH_SCHEMAS = [
     'get_line_items',
     'get_project',
     'get_project_detailed_report',
+    'update_line_item',
 ]
 
 REQUEST_QUERY_SCHEMAS = [
@@ -216,6 +218,22 @@ class DemandAPIClient(object):
     def get_line_item(self, project_id, line_item_id):
         # self._validate_object('request_path', 'get_line_item', {'extProjectId': project_id, 'extLineItemId': line_item_id})
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
+
+    def update_line_item(self, project_id, line_item_id, line_item_data):
+        '''
+            Updates the specified line item by setting the values of the parameters passed.
+            Any parameters not provided will be left unchanged.
+        '''
+        # self._validate_object('request_path', 'update_line_item', {'extProjectId': project_id, 'extLineItemId': line_item_id})
+        self._validate_object('request_body', 'update_line_item', line_item_data)
+        response_data = self._api_post('/projects/{}/lineItems/{}'.format(project_id, line_item_id), line_item_data)
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not update line item. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
 
     def get_line_items(self, project_id):
         # self._validate_object('request_path', 'get_line_items', {'extProjectId': project_id})
