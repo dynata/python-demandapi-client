@@ -7,7 +7,8 @@ This is an InnerSource python project. It is the work of someone who thought it 
 This repository is maintained by
 
 1. [Ridley Larsen](@RidleyLarsen)
-1. [Bradley Wogsland](@wogsland)
+2. [Bradley Wogsland](@wogsland)
+3. [Nathan Workman](@nathanworkman)
 
 ### Community Guidelines
 
@@ -22,6 +23,14 @@ The best place to start is by looking at the [GitHub Issues](https://github.com/
 Linting software is strongly recommended to improve code quality and maintain readability in Python projects. Python's official linting package is called pycodestyle, but another useful linting package is called flake8. Flake8 runs three different linters on your code, including pycodestyle, and a package called PyFlakes that checks for things like unused imports.
 
 Read more [here](http://flake8.pycqa.org/en/latest/)
+
+To lint the files,
+
+    virtualenv venv
+    . venv/bin/activate
+    pip install flake8
+    flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
+    deactivate
 
 ### Testing
 

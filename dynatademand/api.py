@@ -8,6 +8,7 @@ from .errors import DemandAPIError
 SCHEMAS = [
     "project_new",
     "project_buy",
+    "lineitem_update",
 ]
 
 
@@ -186,6 +187,22 @@ class DemandAPIClient(object):
 
     def get_line_item(self, project_id, line_item_id):
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
+
+    def update_line_item(self, project_id, lineitem_id, lineitem_data):
+        '''
+            Updates the specified line item by setting the values of the parameters passed.
+            Any parameters not provided will be left unchanged.
+        '''
+        # Update an existing line item. Uses the "lineitem_update" schema.
+        self._validate_object("lineitem_update", lineitem_data)
+        response_data = self._api_post('/projects/{}/lineItems/{}'.format(project_id, lineitem_id), lineitem_data)
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not update line item. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
 
     def get_line_items(self, project_id):
         return self._api_get('/projects/{}/lineItems'.format(project_id))
