@@ -4,7 +4,6 @@ import os
 import requests
 
 from .errors import DemandAPIError
-from jsonschema.validators import ValidationError
 
 REQUEST_BODY_SCHEMAS = [
     'create_project',
