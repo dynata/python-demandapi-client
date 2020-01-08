@@ -1,0 +1,78 @@
+{
+  "extLineItemId": "lineItem002",
+  "title": "US College",
+  "countryISOCode": "US",
+  "languageISOCode": "en",
+  "surveyURL": "www.mysurvey.com/live/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>",
+  "surveyTestURL": "www.mysurvey.com/test/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>",
+  "indicativeIncidence": 20,
+  "daysInField": 20,
+  "lengthOfInterview": 10,
+  "deliveryType": "BALANCED",
+  "sources": [
+    {
+      "id": 100
+    }
+  ],
+  "targets": [
+    {
+      "count": 200,
+      "dailyLimit": 0,
+      "type": "COMPLETE"
+    }
+  ],
+  "quotaPlan": {
+    "filters": [
+      {
+        "attributeId": "61961",
+        "options": [
+          "3",
+          "4"
+        ],
+        "operator": "include"
+      }
+    ],
+    "quotaGroups": [
+      {
+        "name": "Gender Distribution",
+        "quotaCells": [
+          {
+            "quotaNodes": [
+              {
+                "attributeId": "11",
+                "options": [
+                  "1"
+                ]
+              }
+            ],
+            "count": 130
+          },
+          {
+            "quotaNodes": [
+              {
+                "attributeId": "11",
+                "options": [
+                  "2"
+                ]
+              }
+            ],
+            "count": 70
+          }
+        ]
+      }
+    ]
+  },
+  "state": "PROVISIONED",
+  "stateReason": "Created by Client",
+  "stateLastUpdatedAt": "04/01/2018 00:00:00",
+  "createdAt": "04/01/2018 00:00:00",
+  "updatedAt": "04/01/2018 00:00:00",
+  "launchedAt": null,
+  "endLinks": {
+    "complete": "https://api.researchnow.com/respondent/exit?rst=1&psid={psid}&med={calculatedSecurityCode}",
+    "screenout": "https://api.researchnow.com/respondent/exit?rst=2&psid={psid}",
+    "overquota": "https://api.researchnow.com/respondent/exit?rst=3&psid={psid}",
+    "securityKey1": "35040",
+    "securityLevel": "MEDIUM"
+  }
+}
