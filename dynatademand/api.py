@@ -7,6 +7,7 @@ from .errors import DemandAPIError
 
 SCHEMAS = [
     "project_new",
+    "project_update",
     "lineitem_update",
 ]
 
@@ -164,6 +165,17 @@ class DemandAPIClient(object):
 
     def get_projects(self):
         return self._api_get('/projects')
+
+    def update_project(self, project_id, update_data):
+        self._validate_object("project_update", update_data)
+        response_data = self._api_post('/projects/{}'.format(project_id), update_data)
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not update project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
 
     def get_project_detailed_report(self, project_id):
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
