@@ -170,6 +170,13 @@ class DemandAPIClient(object):
 
     def pause_line_item(self, project_id, line_item_id):
         # Stops traffic to a line item.
+        self.validator.validate_request(
+            'pause_line_item',
+            path_data={
+                'extProjectId': '{}'.format(project_id),
+                'extLineItemId': '{}'.format(line_item_id),
+            },
+        )
         response_data = self._api_post('/projects/{}/lineItems/{}/pause'.format(project_id, line_item_id), {})
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
