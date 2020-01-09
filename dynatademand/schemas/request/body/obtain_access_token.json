@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "clientId": {
+      "type": "string",
+      "enum": [
+        "api"
+      ],
+      "description": "Your app id. Provided to you during account setup"
+    },
+    "password": {
+      "type": "string",
+      "description": "user's password. Provided to you during account setup"
+    },
+    "username": {
+      "type": "string",
+      "description": "user's login name. Provided to you during account setup"
+    }
+  },
+  "required": [
+    "clientId",
+    "password",
+    "username"
+  ]
+}
