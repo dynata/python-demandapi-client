@@ -190,6 +190,10 @@ class DemandAPIClient(object):
     def close_project(self, project_id):
         # Closes the requested project. Once a project is closed, all traffic
         # is stopped, and the project is automatically sent for invoicing.
+        self.validator.validate_request(
+            'close_project',
+            path_data={'extProjectId': '{}'.format(project_id)},
+        )
         response_data = self._api_post('/projects/{}/close'.format(project_id), {})
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
