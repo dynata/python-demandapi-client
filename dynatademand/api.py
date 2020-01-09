@@ -4,34 +4,7 @@ import os
 import requests
 
 from .errors import DemandAPIError
-
-REQUEST_BODY_SCHEMAS = [
-    'create_project',
-    "update_project",
-    'update_line_item',
-]
-
-REQUEST_PATH_SCHEMAS = [
-    'get_attributes',
-    'get_event',
-    'get_feasibility',
-    'get_line_item',
-    'get_line_item_detailed_report',
-    'get_line_items',
-    'get_project',
-    'get_project_detailed_report',
-    'update_line_item',
-    'update_project'
-]
-
-REQUEST_QUERY_SCHEMAS = [
-    'get_attributes',
-    'get_countries',
-    'get_events',
-    'get_line_items',
-    'get_projects',
-    'get_survey_topics',
-]
+from .validator import DemandAPIValidator
 
 
 class DemandAPIClient(object):
@@ -61,37 +34,7 @@ class DemandAPIClient(object):
         self.auth_base_url = '{}/auth/v1'.format(self.base_host)
         self.base_url = '{}/sample/v1'.format(self.base_host)
 
-        self._load_schemas()
-
-    def _load_schemas(self):
-        # Load the compiled schemas for use in validation.
-        self._request_body_schemas = {}
-        for schema_type in REQUEST_BODY_SCHEMAS:
-            schema_file = open('dynatademand/schemas/request/body/{}.json'.format(schema_type), 'r')
-            self._request_body_schemas[schema_type] = json.load(schema_file)
-            schema_file.close()
-        self._request_path_schemas = {}
-        for schema_type in REQUEST_PATH_SCHEMAS:
-            schema_file = open('dynatademand/schemas/request/path/{}.json'.format(schema_type), 'r')
-            self._request_path_schemas[schema_type] = json.load(schema_file)
-            schema_file.close()
-        self._request_query_schemas = {}
-        for schema_type in REQUEST_QUERY_SCHEMAS:
-            schema_file = open('dynatademand/schemas/request/query/{}.json'.format(schema_type), 'r')
-            self._request_query_schemas[schema_type] = json.load(schema_file)
-            schema_file.close()
-
-    def _validate_object(self, object_type, schema_type, data):
-        # jsonschema.validate will return none if there is no error,
-        # otherwise it will raise its' own error with details on the failure.
-        schema = ''
-        if 'request_body' == object_type:
-            schema = self._request_body_schemas[schema_type]
-        elif 'request_path' == object_type:
-            schema = self._request_path_schemas[schema_type]
-        elif 'request_query' == object_type:
-            schema = self._request_query_schemas[schema_type]
-        jsonschema.validate(schema=schema, instance=data)
+        self.validator = DemandAPIValidator()
 
     def _check_authentication(self):
         # This doesn't check if the access token is valid, just that it exists.
@@ -130,13 +73,23 @@ class DemandAPIClient(object):
         return response.json()
 
     def authenticate(self):
-        # Sends the authentication data to
+        # Sends the authentication data to the access token endpoint.
         url = '{}/token/password'.format(self.auth_base_url)
-        auth_response = requests.post(url, json={
+        payload = {
             'clientId': self.client_id,
             'password': self.password,
             'username': self.username,
-        })
+        }
+
+        '''
+            #TODO: Waiting for a valid schema.
+            self.validator.validate_request(
+                'obtain_access_token',
+                request_body=payload
+            )
+        '''
+
+        auth_response = requests.post(url, json=payload)
         if auth_response.status_code > 399:
             raise DemandAPIError('Authentication failed with status {} and error: {}'.format(
                 auth_response.status_code,
@@ -149,10 +102,16 @@ class DemandAPIClient(object):
 
     def refresh_access_token(self):
         url = '{}/token/refresh'.format(self.auth_base_url)
-        refresh_response = requests.post(url, json={
+        payload = {
             'clientId': self.client_id,
             'refreshToken': self._refresh_token
-        })
+        }
+        # Validate the rqeuest before sending.
+        self.validator.validate_request(
+            'refresh_access_token',
+            request_body=payload
+        )
+        refresh_response = requests.post(url, json=payload)
         if refresh_response.status_code != 200:
             raise DemandAPIError('Refreshing Access Token failed with status {} and error: {}'.format(
                 refresh_response.status_code, refresh_response.content
@@ -164,11 +123,17 @@ class DemandAPIClient(object):
 
     def logout(self):
         url = '{}/logout'.format(self.auth_base_url)
-        logout_response = requests.post(url, json={
+        payload = {
             'clientId': self.client_id,
             'refreshToken': self._refresh_token,
             'accessToken': self._access_token
-        })
+        }
+        self.validator.validate_request(
+            'logout',
+            request_body=payload
+        )
+
+        logout_response = requests.post(url, json=payload)
         if logout_response.status_code != 204:
             raise DemandAPIError('Log out failed with status {} and error: {}'.format(
                 logout_response.status_code, logout_response.content
@@ -176,31 +141,55 @@ class DemandAPIClient(object):
         return logout_response.json()
 
     def get_attributes(self, country_code, language_code):
-        # Validate path
-        self._validate_object('request_path', 'get_attributes', {
-            'countryCode': '{}'.format(country_code),
-            'languageCode': '{}'.format(language_code)
-        })
-        # No query or request body schemas to validate.
+        self.validator.validate_request(
+            'get_attributes',
+            path_data={
+                'countryCode': '{}'.format(country_code),
+                'languageCode': '{}'.format(language_code)
+            },
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/attributes/{}/{}'.format(country_code, language_code))
 
     def get_countries(self):
-        # No schemas to validate.
+        self.validator.validate_request(
+            'get_countries',
+            path_data={},
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/countries')
 
     def get_event(self, event_id):
-        # Validate path
-        self._validate_object('request_path', 'get_event', {'eventId': '{}'.format(event_id)})
+        self.validator.validate_request(
+            'get_event',
+            path_data={'eventId': '{}'.format(event_id)},
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/events/{}'.format(event_id))
 
-    def get_events(self):
-        # No schemas to validate.
+    def get_events(self, **kwargs):
+        self.validator.validate_request(
+            'get_events',
+            path_data={},
+            query_params=kwargs,
+            request_body={},
+        )
         return self._api_get('/events')
 
     def create_project(self, project_data):
-        # Validate request body
-        self._validate_object('request_body', 'create_project', project_data)
-        # No path or query schemas to validate.
+        '''
+            #TODO: Waiting on a valid request body schema.
+            self.validator.validate_request(
+                'create_project',
+                path_data={},
+                query_params={},
+                request_body=project_data,
+            )
+        '''
+
         response_data = self._api_post('/projects', project_data)
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
@@ -211,22 +200,33 @@ class DemandAPIClient(object):
         return response_data
 
     def get_project(self, project_id):
-        # Validate path
-        self._validate_object('request_path', 'get_project', {
-            'extProjectId': '{}'.format(project_id)
-        })
+        self.validator.validate_request(
+            'get_project',
+            path_data={'extProjectId': '{}'.format(project_id)},
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/projects/{}'.format(project_id))
 
-    def get_projects(self):
-        # No schemas to validate.
+    def get_projects(self, **kwargs):
+        self.validator.validate_request(
+            'get_projects',
+            path_data={},
+            query_params=kwargs,
+            request_body={},
+        )
         return self._api_get('/projects')
 
     def update_project(self, project_id, update_data):
-        # Validate path and request body.
-        self._validate_object('request_path', 'update_project', {
-            'extProjectId': '{}'.format(project_id)
-        })
-        self._validate_object('request_body', 'update_project', update_data)
+        '''
+            #TODO: Waiting on a valid request body schema and path schema.
+            self.validator.validate_request(
+                'update_project',
+                path_data={'extProjectId': '{}'.format(project_id)},
+                query_params={},
+                request_body=update_data,
+            )
+        '''
         response_data = self._api_post('/projects/{}'.format(project_id), update_data)
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
@@ -237,20 +237,24 @@ class DemandAPIClient(object):
         return response_data
 
     def get_project_detailed_report(self, project_id):
-        # Validate path
-        self._validate_object('request_path', 'get_project_detailed_report', {
-            'extProjectId': '{}'.format(project_id)
-        })
-        # No query or request body to validate.
+        self.validator.validate_request(
+            'get_project_detailed_report',
+            path_data={'extProjectId': '{}'.format(project_id)},
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
     def get_line_item(self, project_id, line_item_id):
-        # Validate path
-        self._validate_object('request_path', 'get_line_item', {
-            'extProjectId': '{}'.format(project_id),
-            'extLineItemId': '{}'.format(line_item_id)
-        })
-        # No query or request body to validate.
+        self.validator.validate_request(
+            'get_line_item',
+            path_data={
+                'extProjectId': '{}'.format(project_id),
+                'extLineItemId': '{}'.format(line_item_id)
+            },
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
 
     def update_line_item(self, project_id, line_item_id, line_item_data):
@@ -258,12 +262,18 @@ class DemandAPIClient(object):
             Updates the specified line item by setting the values of the parameters passed.
             Any parameters not provided will be left unchanged.
         '''
-        # Validate path and request body.
-        self._validate_object('request_path', 'update_line_item', {
-            'extProjectId': '{}'.format(project_id),
-            'extLineItemId': '{}'.format(line_item_id),
-        })
-        self._validate_object('request_body', 'update_line_item', line_item_data)
+        '''
+            #TODO: Waiting on a valid path and request body schema.
+            self.validator.validate_request(
+                'update_line_item',
+                path_data={
+                    'extProjectId': '{}'.format(project_id),
+                    'extLineItemId': '{}'.format(line_item_id),
+                },
+                query_params={},
+                request_body=line_item_data,
+            )
+        '''
         response_data = self._api_post('/projects/{}/lineItems/{}'.format(project_id, line_item_id), line_item_data)
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
@@ -273,35 +283,50 @@ class DemandAPIClient(object):
             )
         return response_data
 
-    def get_line_items(self, project_id):
-        # Validate path
-        self._validate_object('request_path', 'get_line_items', {
-            'extProjectId': '{}'.format(project_id)
-        })
-        # No query or request body to validate.
+    def get_line_items(self, project_id, **kwargs):
+        self.validator.validate_request(
+            'get_line_items',
+            path_data={'extProjectId': '{}'.format(project_id)},
+            query_params=kwargs,
+            request_body={},
+        )
         return self._api_get('/projects/{}/lineItems'.format(project_id))
 
     def get_line_item_detailed_report(self, project_id, line_item_id):
-        # Validate path
-        self._validate_object('request_path', 'get_line_item_detailed_report', {
-            'extProjectId': '{}'.format(project_id),
-            'extLineItemId': '{}'.format(line_item_id),
-        })
-        # No query or request body to validate.
+        self.validator.validate_request(
+            'get_line_item_detailed_report',
+            path_data={
+                'extProjectId': '{}'.format(project_id),
+                'extLineItemId': '{}'.format(line_item_id),
+            },
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/projects/{}/lineItems/{}/detailedReport'.format(project_id, line_item_id))
 
     def get_feasibility(self, project_id):
-        # Validate path
-        self._validate_object('request_path', 'get_feasibility', {
-            'extProjectId': '{}'.format(project_id)
-        })
-        # No query or request body to validate.
+        self.validator.validate_request(
+            'get_feasibility',
+            path_data={'extProjectId': '{}'.format(project_id)},
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/projects/{}/feasibility'.format(project_id))
 
     def get_survey_topics(self):
-        # No schemas to validate.
+        self.validator.validate_request(
+            'get_survey_topics',
+            path_data={},
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/categories/surveyTopics')
 
     def get_sources(self):
-        # No schemas to validate.
+        self.validator.validate_request(
+            'get_sources',
+            path_data={},
+            query_params={},
+            request_body={},
+        )
         return self._api_get('/sources')

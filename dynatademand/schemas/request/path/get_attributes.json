@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "countryCode": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "languageCode": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   },
   "required": [

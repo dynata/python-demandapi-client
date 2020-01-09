@@ -2,10 +2,12 @@
   "type": "object",
   "properties": {
     "extProjectId": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "extLineItemId": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   },
   "required": [

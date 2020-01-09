@@ -79,22 +79,19 @@
             }
           },
           "targets": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "count": {
-                  "type": "integer"
-                },
-                "dailyLimit": {
-                  "type": "integer"
-                },
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "COMPLETE"
-                  ]
-                }
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              },
+              "dailyLimit": {
+                "type": "integer"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "COMPLETE"
+                ]
               }
             }
           },
