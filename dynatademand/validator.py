@@ -48,7 +48,7 @@ class DemandAPIValidator(object):
             'query': {},
             'body': {},
         }
-        for endpoint_name, schemas in ENDPOINTS.iteritems():
+        for endpoint_name, schemas in ENDPOINTS.items():
             for schema in schemas:
                 with open('dynatademand/schemas/request/{}/{}.json'.format(schema, endpoint_name), 'r') as schema_file:
                     self.schemas[schema][endpoint_name] = json.load(schema_file)
