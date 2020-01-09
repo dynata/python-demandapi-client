@@ -1,5 +1,3 @@
-import json
-import jsonschema
 import os
 import requests
 
