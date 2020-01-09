@@ -4,6 +4,7 @@ from __future__ import unicode_literals, print_function
 import json
 import responses
 import unittest
+from jsonschema import Draft7Validator
 from jsonschema.exceptions import ValidationError
 
 from dynatademand.api import DemandAPIClient
@@ -17,6 +18,16 @@ class TestValidator(unittest.TestCase):
         self.validator = DemandAPIValidator()
         self.api = DemandAPIClient(client_id='test', username='testuser', password='testpass', base_host=BASE_HOST)
         self.api._access_token = 'Bearer testtoken'
+
+    def test_schemas(self):
+        for schema_type in self.validator.schemas.keys():
+            '''
+            #TODO allow path schema validation when we receive valid ones
+            '''
+            if schema_type == 'path':
+                continue
+            for schema in self.validator.schemas[schema_type].values():
+                Draft7Validator.check_schema(schema)
 
     def test_query_params(self):
         self.validator.validate_request(
