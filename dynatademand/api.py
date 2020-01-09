@@ -193,7 +193,11 @@ class DemandAPIClient(object):
             can only be bought if the feasibility for the line item is in status=READY
             and totalCount > 0.
         '''
-        self._validate_object("project_buy", buy_data)
+        self.validator.validate_request(
+            'buy_project',
+            path_data={'extProjectId': '{}'.format(project_id)},
+            request_body=buy_data,
+        )
         response_data = self._api_post('/projects/{}/buy'.format(project_id), buy_data)
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(

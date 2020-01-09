@@ -1,0 +1,22 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "extLineItemId",
+      "surveyURL",
+      "surveyTestURL"
+    ],
+    "properties": {
+      "extLineItemId": {
+        "type": "string"
+      },
+      "surveyURL": {
+        "type": "string"
+      },
+      "surveyTestURL": {
+        "type": "string"
+      }
+    }
+  }
+}
