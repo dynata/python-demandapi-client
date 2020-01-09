@@ -1,0 +1,88 @@
+{
+  "title": "Test Survey",
+  "jobNumber": "PO-1234",
+  "notificationEmails": [
+    "api-test@dynata.com"
+  ],
+  "devices": [
+    "mobile",
+    "desktop",
+    "tablet"
+  ],
+  "category": {
+    "surveyTopic": [
+      "AUTOMOTIVE",
+      "BUSINESS"
+    ]
+  },
+  "lineItems": [
+    {
+      "title": "US College",
+      "countryISOCode": "US",
+      "languageISOCode": "en",
+      "surveyURL": "www.mysurvey.com/live/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>",
+      "surveyTestURL": "www.mysurvey.com/test/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>",
+      "indicativeIncidence": 20,
+      "daysInField": 20,
+      "lengthOfInterview": 10,
+      "deliveryType": "BALANCED",
+      "sources": [
+        {
+          "id": 100
+        }
+      ],
+      "targets": [
+        {
+          "count": 160,
+          "dailyLimit": 0,
+          "type": "COMPLETE"
+        }
+      ],
+      "quotaPlan": {
+        "filters": [
+          {
+            "attributeId": "61961",
+            "options": [
+              "3",
+              "4"
+            ],
+            "operator": "include"
+          }
+        ],
+        "quotaGroups": [
+          {
+            "name": "Gender Distribution",
+            "quotaCells": [
+              {
+                "quotaNodes": [
+                  {
+                    "attributeId": "11",
+                    "options": [
+                      "1"
+                    ]
+                  }
+                ],
+                "count": 100
+              },
+              {
+                "quotaNodes": [
+                  {
+                    "attributeId": "11",
+                    "options": [
+                      "2"
+                    ]
+                  }
+                ],
+                "count": 60
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "exclusions": {
+    "type": "PROJECT",
+    "list": []
+  }
+}

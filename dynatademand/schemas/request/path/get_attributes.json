@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "countryCode": {
+      "type": "string",
+      "required": true
+    },
+    "languageCode": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "required": [
+    "countryCode",
+    "languageCode"
+  ]
+}

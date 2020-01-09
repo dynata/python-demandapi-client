@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "limit": {
+      "type": "integer",
+      "format": "int32",
+      "default": 10,
+      "description": "The number of results to return when viewing a page. For example, setting limit to 20 means that, at most, 20 results will be returned in the request.",
+      "maximum": 100
+    },
+    "offset": {
+      "type": "integer",
+      "format": "int32",
+      "default": 0,
+      "description": "The number of results to skip before returning results. For example, setting an offset of 20 means that the API will discard the first 20 results."
+    },
+    "countryIsoCode": {
+      "type": "string"
+    },
+    "languageIsoCode": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "sort": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "text": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    }
+  },
+  "required": []
+}
