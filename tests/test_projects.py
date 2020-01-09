@@ -63,7 +63,7 @@ class TestProjectEndpoints(unittest.TestCase):
     @responses.activate
     def test_buy_project(self):
         # Tests buying a project.
-        with open('./tests/test_files/examples/project_buy.json', 'r') as buy_project_file:
+        with open('./tests/test_files/buy_project.json', 'r') as buy_project_file:
             buy_project_data = json.load(buy_project_file)
         # Success response
         responses.add(
