@@ -7,6 +7,7 @@ from .errors import DemandAPIError
 
 REQUEST_BODY_SCHEMAS = [
     'create_project',
+    "update_project",
     'update_line_item',
 ]
 
@@ -20,6 +21,7 @@ REQUEST_PATH_SCHEMAS = [
     'get_project',
     'get_project_detailed_report',
     'update_line_item',
+    'update_project'
 ]
 
 REQUEST_QUERY_SCHEMAS = [
@@ -218,6 +220,21 @@ class DemandAPIClient(object):
     def get_projects(self):
         # No schemas to validate.
         return self._api_get('/projects')
+
+    def update_project(self, project_id, update_data):
+        # Validate path and request body.
+        self._validate_object('request_path', 'update_project', {
+            'extProjectId': '{}'.format(project_id)
+        })
+        self._validate_object('request_body', 'update_project', update_data)
+        response_data = self._api_post('/projects/{}'.format(project_id), update_data)
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not update project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
 
     def get_project_detailed_report(self, project_id):
         # Validate path
