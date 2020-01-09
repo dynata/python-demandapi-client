@@ -57,22 +57,13 @@ class DemandAPIValidator(object):
     def _validate_object(self, schema_type, endpoint_name, data):
         jsonschema.validate(schema=self.schemas[schema_type][endpoint_name], instance=data)
 
-    def validate_path(self, endpoint_name, data):
-        self._validate_object('path', endpoint_name, data)
-
-    def validate_query(self, endpoint_name, data):
-        self._validate_object('query', endpoint_name, data)
-
-    def validate_body(self, endpoint_name, data):
-        self._validate_object('body', endpoint_name, data)
-
     def validate_request(self, endpoint_name, path_data=None, query_params=None, request_body=None):
         '''
             # TODO: None of the path schemas from the documentation are currently valid.
             if 'path' in ENDPOINTS[endpoint_name]:
-                self.validate_path(endpoint_name, path_data)
+                self._validate_object('path', endpoint_name, path_data)
         '''
         if 'query' in ENDPOINTS[endpoint_name]:
-            self.validate_query(endpoint_name, query_params)
+            self._validate_object('query', endpoint_name, query_params)
         if 'body' in ENDPOINTS[endpoint_name]:
-            self.validate_body(endpoint_name, request_body)
+            self._validate_object('body', endpoint_name, request_body)
