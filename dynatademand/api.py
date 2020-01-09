@@ -146,48 +146,38 @@ class DemandAPIClient(object):
                 'languageCode': '{}'.format(language_code)
             },
             query_params=kwargs,
-            request_body={},
         )
-        return self._api_get('/attributes/{}/{}'.format(country_code, language_code))
+        return self._api_get('/attributes/{}/{}'.format(country_code, language_code), kwargs)
 
     def get_countries(self, **kwargs):
         self.validator.validate_request(
             'get_countries',
-            path_data={},
             query_params=kwargs,
-            request_body={},
         )
-        return self._api_get('/countries')
+        return self._api_get('/countries', kwargs)
 
     def get_event(self, event_id):
         self.validator.validate_request(
             'get_event',
             path_data={'eventId': '{}'.format(event_id)},
-            query_params={},
-            request_body={},
         )
         return self._api_get('/events/{}'.format(event_id))
 
     def get_events(self, **kwargs):
         self.validator.validate_request(
             'get_events',
-            path_data={},
             query_params=kwargs,
-            request_body={},
         )
-        return self._api_get('/events')
+        return self._api_get('/events', kwargs)
 
     def create_project(self, project_data):
         '''
             #TODO: Waiting on a valid request body schema.
             self.validator.validate_request(
                 'create_project',
-                path_data={},
-                query_params={},
                 request_body=project_data,
             )
         '''
-
         response_data = self._api_post('/projects', project_data)
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
@@ -201,19 +191,15 @@ class DemandAPIClient(object):
         self.validator.validate_request(
             'get_project',
             path_data={'extProjectId': '{}'.format(project_id)},
-            query_params={},
-            request_body={},
         )
         return self._api_get('/projects/{}'.format(project_id))
 
     def get_projects(self, **kwargs):
         self.validator.validate_request(
             'get_projects',
-            path_data={},
             query_params=kwargs,
-            request_body={},
         )
-        return self._api_get('/projects')
+        return self._api_get('/projects', kwargs)
 
     def update_project(self, project_id, update_data):
         '''
@@ -221,7 +207,6 @@ class DemandAPIClient(object):
             self.validator.validate_request(
                 'update_project',
                 path_data={'extProjectId': '{}'.format(project_id)},
-                query_params={},
                 request_body=update_data,
             )
         '''
@@ -238,8 +223,6 @@ class DemandAPIClient(object):
         self.validator.validate_request(
             'get_project_detailed_report',
             path_data={'extProjectId': '{}'.format(project_id)},
-            query_params={},
-            request_body={},
         )
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
@@ -250,8 +233,6 @@ class DemandAPIClient(object):
                 'extProjectId': '{}'.format(project_id),
                 'extLineItemId': '{}'.format(line_item_id)
             },
-            query_params={},
-            request_body={},
         )
         return self._api_get('/projects/{}/lineItems/{}'.format(project_id, line_item_id))
 
@@ -268,7 +249,6 @@ class DemandAPIClient(object):
                     'extProjectId': '{}'.format(project_id),
                     'extLineItemId': '{}'.format(line_item_id),
                 },
-                query_params={},
                 request_body=line_item_data,
             )
         '''
@@ -286,9 +266,8 @@ class DemandAPIClient(object):
             'get_line_items',
             path_data={'extProjectId': '{}'.format(project_id)},
             query_params=kwargs,
-            request_body={},
         )
-        return self._api_get('/projects/{}/lineItems'.format(project_id))
+        return self._api_get('/projects/{}/lineItems'.format(project_id), kwargs)
 
     def get_line_item_detailed_report(self, project_id, line_item_id):
         self.validator.validate_request(
@@ -297,8 +276,6 @@ class DemandAPIClient(object):
                 'extProjectId': '{}'.format(project_id),
                 'extLineItemId': '{}'.format(line_item_id),
             },
-            query_params={},
-            request_body={},
         )
         return self._api_get('/projects/{}/lineItems/{}/detailedReport'.format(project_id, line_item_id))
 
@@ -306,25 +283,18 @@ class DemandAPIClient(object):
         self.validator.validate_request(
             'get_feasibility',
             path_data={'extProjectId': '{}'.format(project_id)},
-            query_params={},
-            request_body={},
         )
         return self._api_get('/projects/{}/feasibility'.format(project_id))
 
     def get_survey_topics(self, **kwargs):
         self.validator.validate_request(
             'get_survey_topics',
-            path_data={},
             query_params=kwargs,
-            request_body={},
         )
-        return self._api_get('/categories/surveyTopics')
+        return self._api_get('/categories/surveyTopics', kwargs)
 
     def get_sources(self):
         self.validator.validate_request(
             'get_sources',
-            path_data={},
-            query_params={},
-            request_body={},
         )
         return self._api_get('/sources')
