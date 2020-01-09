@@ -64,7 +64,7 @@ class TestLineItemEndpoints(unittest.TestCase):
 
     @responses.activate
     def test_update_line_item(self):
-        with open('./tests/test_files/examples/lineitem_update.json', 'r') as new_lineitem_file:
+        with open('./tests/test_files/update_line_item.json', 'r') as new_lineitem_file:
             update_lineitem_data = json.load(new_lineitem_file)
 
         # Success response
