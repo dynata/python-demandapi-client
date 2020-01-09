@@ -1,0 +1,122 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "countryISOCode": {
+      "type": "string"
+    },
+    "languageISOCode": {
+      "type": "string"
+    },
+    "surveyURL": {
+      "type": "string"
+    },
+    "surveyTestURL": {
+      "type": "string"
+    },
+    "indicativeIncidence": {
+      "type": "integer"
+    },
+    "daysInField": {
+      "type": "integer"
+    },
+    "lengthOfInterview": {
+      "type": "integer"
+    },
+    "deliveryType": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "targets": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer"
+        },
+        "dailyLimit": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "COMPLETE"
+          ]
+        }
+      }
+    },
+    "quotaPlan": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "attributeId": {
+                "type": "string"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "quotaGroups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "quotaCells": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "quotaNodes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "attributeId": {
+                            "type": "string"
+                          },
+                          "options": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "count": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "title": "Update Line Item"
+}

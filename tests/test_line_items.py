@@ -54,7 +54,7 @@ class TestLineItemEndpoints(unittest.TestCase):
     @responses.activate
     def test_add_line_item(self):
         # Tests creating a project. This also tests validating the project data as part of `api.create_project`.
-        with open('./tests/test_files/examples/lineitem_new.json', 'r') as new_lineitem_file:
+        with open('./tests/test_files/create_line_item.json', 'r') as new_lineitem_file:
             new_lineitem_data = json.load(new_lineitem_file)
         # Success response
         responses.add(
@@ -70,8 +70,8 @@ class TestLineItemEndpoints(unittest.TestCase):
             status=200)
         # Test success response
         self.api.add_line_item(24, new_lineitem_data)
-        self.assertEqual(len(responses.calls), 2)
-        
+        self.assertEqual(len(responses.calls), 1)
+
         # Test error response
         with self.assertRaises(DemandAPIError):
             self.api.add_line_item(24, new_lineitem_data)
@@ -79,7 +79,7 @@ class TestLineItemEndpoints(unittest.TestCase):
 
     @responses.activate
     def test_update_line_item(self):
-        with open('./tests/test_files/examples/lineitem_update.json', 'r') as new_lineitem_file:
+        with open('./tests/test_files/update_line_item.json', 'r') as new_lineitem_file:
             update_lineitem_data = json.load(new_lineitem_file)
 
         # Success response
