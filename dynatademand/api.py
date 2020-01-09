@@ -138,23 +138,23 @@ class DemandAPIClient(object):
             ))
         return logout_response.json()
 
-    def get_attributes(self, country_code, language_code):
+    def get_attributes(self, country_code, language_code, **kwargs):
         self.validator.validate_request(
             'get_attributes',
             path_data={
                 'countryCode': '{}'.format(country_code),
                 'languageCode': '{}'.format(language_code)
             },
-            query_params={},
+            query_params=kwargs,
             request_body={},
         )
         return self._api_get('/attributes/{}/{}'.format(country_code, language_code))
 
-    def get_countries(self):
+    def get_countries(self, **kwargs):
         self.validator.validate_request(
             'get_countries',
             path_data={},
-            query_params={},
+            query_params=kwargs,
             request_body={},
         )
         return self._api_get('/countries')
@@ -311,11 +311,11 @@ class DemandAPIClient(object):
         )
         return self._api_get('/projects/{}/feasibility'.format(project_id))
 
-    def get_survey_topics(self):
+    def get_survey_topics(self, **kwargs):
         self.validator.validate_request(
             'get_survey_topics',
             path_data={},
-            query_params={},
+            query_params=kwargs,
             request_body={},
         )
         return self._api_get('/categories/surveyTopics')
