@@ -67,7 +67,7 @@ class TestLineItemEndpoints(unittest.TestCase):
             json={'status': {'message': 'error'}},
             status=200
         )
-        
+
         # Test successful response
         self.api.pause_line_item(24, 180)
         self.assertEqual(len(responses.calls), 1)
