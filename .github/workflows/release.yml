@@ -1,0 +1,30 @@
+name: release
+on:
+  create:
+    tags:
+      - *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get release tag
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+    - uses: actions/checkout@v1
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install Poetry
+      run: |
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+        poetry install
+    - name: Poetry - Set Version & Build
+      run: |
+        poetry version ${{ steps.get_version.outputs.VERSION }}
+        poetry build
+    - name: Push to PyPI
+      run: |
+        poetry publish --build --username "${{ secrets.PYPI_USERNAME }}" --password "${{ secrets.PYPI_PASSWORD }}" --no-interaction
