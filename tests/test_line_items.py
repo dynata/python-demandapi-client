@@ -76,6 +76,7 @@ class TestLineItemEndpoints(unittest.TestCase):
             self.api.add_line_item(24, new_lineitem_data)
         self.assertEqual(len(responses.calls), 2)
 
+    @responses.activate
     def test_launch_line_item(self):
         # Tests closing a project.
         responses.add(

@@ -66,7 +66,7 @@ class DemandAPIValidator(object):
         if query_params is None:
             query_params = {}
         if request_body is None:
-            query_params = {}
+            request_body = {}
 
         '''
             # TODO: None of the path schemas from the documentation are currently valid.
