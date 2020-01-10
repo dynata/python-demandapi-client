@@ -65,7 +65,7 @@ class TestLineItemEndpoints(unittest.TestCase):
         responses.add(
             responses.POST,
             '{}/sample/v1/projects/24/lineItems/180/launch'.format(BASE_HOST),
-          json={'status': {'message': 'error'}},
+            json={'status': {'message': 'error'}},
             status=200
         )
 
