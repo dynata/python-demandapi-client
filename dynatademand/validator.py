@@ -16,6 +16,7 @@ ENDPOINTS = {
     'get_project_detailed_report': ['path', ],
 
     # Line items
+    'create_line_item': ['path', 'body', ],
     'get_line_item': ['path', ],
     'get_line_items': ['path', 'query'],
     'get_line_item_detailed_report': ['path', ],
@@ -59,7 +60,14 @@ class DemandAPIValidator(object):
     def _validate_object(self, schema_type, endpoint_name, data):
         jsonschema.validate(schema=self.schemas[schema_type][endpoint_name], instance=data)
 
-    def validate_request(self, endpoint_name, path_data={}, query_params={}, request_body={}):
+    def validate_request(self, endpoint_name, path_data=None, query_params=None, request_body=None):
+        if path_data is None:
+            path_data = {}
+        if query_params is None:
+            query_params = {}
+        if request_body is None:
+            request_body = {}
+
         '''
             # TODO: None of the path schemas from the documentation are currently valid.
             if 'path' in ENDPOINTS[endpoint_name]:
