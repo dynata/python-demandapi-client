@@ -1,5 +1,6 @@
 import json
 import jsonschema
+import pkg_resources
 
 ENDPOINTS = {
     # Authorization
@@ -57,10 +58,18 @@ class DemandAPIValidator(object):
             'query': {},
             'body': {},
         }
+        resource_package = __name__
         for endpoint_name, schemas in ENDPOINTS.items():
             for schema in schemas:
-                with open('dynatademand/schemas/request/{}/{}.json'.format(schema, endpoint_name), 'r') as schema_file:
-                    self.schemas[schema][endpoint_name] = json.load(schema_file)
+                resource_path = '/'.join((
+                    'schemas',
+                    'request',
+                    schema,
+                    '{}.json'.format(endpoint_name)
+                ))
+                self.schemas[schema][endpoint_name] = json.loads(
+                    pkg_resources.resource_string(resource_package, resource_path)
+                )
 
     def _validate_object(self, schema_type, endpoint_name, data):
         jsonschema.validate(schema=self.schemas[schema_type][endpoint_name], instance=data)

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dynatademand"
-version = "1.0"
+version = "1.01"
 description = "A Python client library for the Dynata Demand API"
 authors = ["Ridley Larsen <Ridley.Larsen@dynata.com>", "Bradley Wogsland <Bradley.Wogsland@dynata.com>", "Nathan Workman <Nathan.Workman@dynata.com>"]
 
