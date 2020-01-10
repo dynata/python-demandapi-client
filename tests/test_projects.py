@@ -61,6 +61,27 @@ class TestProjectEndpoints(unittest.TestCase):
         self.assertEqual(len(responses.calls), 1)
 
     @responses.activate
+    def test_close_project(self):
+        # Tests closing a project.
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/close'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200
+        )
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/close'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200
+        )
+        self.api.close_project(24)
+        self.assertEqual(len(responses.calls), 1)
+        with self.assertRaises(DemandAPIError):
+            self.api.close_project(24)
+        self.assertEqual(len(responses.calls), 2)
+
+    @responses.activate
     def test_update_project(self):
         # Tests creating a project. This also tests validating the project data as part of `api.create_project`.
         with open('./tests/test_files/update_project.json', 'r') as update_project_file:

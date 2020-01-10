@@ -11,6 +11,7 @@ ENDPOINTS = {
     'create_project': ['body', ],
     'get_projects': ['query', ],
     'get_project': ['path', ],
+    'close_project': ['path', ],
     'update_project': ['path', 'body', ],
     'get_project_detailed_report': ['path', ],
 
