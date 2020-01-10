@@ -68,7 +68,7 @@ class DemandAPIValidator(object):
                     '{}.json'.format(endpoint_name)
                 ))
                 self.schemas[schema][endpoint_name] = json.loads(
-                    pkg_resources.resource_string(resource_package, resource_path)
+                    pkg_resources.resource_string(resource_package, resource_path).decode('utf-8')
                 )
 
     def _validate_object(self, schema_type, endpoint_name, data):
