@@ -52,7 +52,7 @@ class TestLineItemEndpoints(unittest.TestCase):
         self.assertEqual(responses.calls[0].response.json(), line_item_detailed_report_json)
 
     @responses.activate
-    def test_pause_lineitem(self):
+    def test_pause_line_item(self):
         # Tests pausing a line item.
         responses.add(
             responses.POST,
