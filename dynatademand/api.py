@@ -68,6 +68,8 @@ class DemandAPIClient(object):
             raise DemandAPIError('Demand API request to {} failed with status {}. Response: {}'.format(
                 url, response.status_code, response.content
             ))
+        if response.headers['content-type'] == 'application/pdf':
+            return response.content
         return response.json()
 
     def authenticate(self):
@@ -186,6 +188,13 @@ class DemandAPIClient(object):
                 )
             )
         return response_data
+
+    def get_invoice(self, project_id):
+        self.validator.validate_request(
+            'get_event',
+            path_data={'extProjectId': '{}'.format(project_id)},
+        )
+        return self._api_get('/projects/{}/invoices'.format(project_id))
 
     def buy_project(self, project_id, buy_data):
         '''
