@@ -16,6 +16,9 @@ ENDPOINTS = {
     'buy_project': ['path', 'body', ],
     'get_project_detailed_report': ['path', ],
 
+    # Invoices
+    'get_invoice': ['path', ],
+
     # Line items
     'create_line_item': ['path', 'body', ],
     'get_line_item': ['path', ],
