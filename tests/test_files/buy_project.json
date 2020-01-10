@@ -1,0 +1,12 @@
+[
+  {
+    "extLineItemId": "lineItem001",
+    "surveyURL": "www.mysurvey.com/live/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>",
+    "surveyTestURL": "www.mysurvey.com/test/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>"
+  },
+  {
+    "extLineItemId": "lineItem002",
+    "surveyURL": "www.mysurvey.com/live/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>",
+    "surveyTestURL": "www.mysurvey.com/test/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>"
+  }
+]

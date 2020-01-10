@@ -61,6 +61,31 @@ class TestProjectEndpoints(unittest.TestCase):
         self.assertEqual(len(responses.calls), 1)
 
     @responses.activate
+    def test_buy_project(self):
+        # Tests buying a project.
+        with open('./tests/test_files/buy_project.json', 'r') as buy_project_file:
+            buy_project_data = json.load(buy_project_file)
+        # Success response
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/buy'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200)
+        # Response with error status
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/buy'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200)
+        # Test success response
+        self.api.buy_project(24, buy_project_data)
+        self.assertEqual(len(responses.calls), 1)
+        # Test error response
+        with self.assertRaises(DemandAPIError):
+            self.api.buy_project(24, buy_project_data)
+        self.assertEqual(len(responses.calls), 2)
+
+    @responses.activate
     def test_close_project(self):
         # Tests closing a project.
         responses.add(

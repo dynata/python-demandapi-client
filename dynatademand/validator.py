@@ -13,6 +13,7 @@ ENDPOINTS = {
     'get_project': ['path', ],
     'close_project': ['path', ],
     'update_project': ['path', 'body', ],
+    'buy_project': ['path', 'body', ],
     'get_project_detailed_report': ['path', ],
 
     # Line items

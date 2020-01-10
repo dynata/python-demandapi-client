@@ -187,6 +187,26 @@ class DemandAPIClient(object):
             )
         return response_data
 
+    def buy_project(self, project_id, buy_data):
+        '''
+            Buy the line items for a project, agreeing to the price. A Line Item
+            can only be bought if the feasibility for the line item is in status=READY
+            and totalCount > 0.
+        '''
+        self.validator.validate_request(
+            'buy_project',
+            path_data={'extProjectId': '{}'.format(project_id)},
+            request_body=buy_data,
+        )
+        response_data = self._api_post('/projects/{}/buy'.format(project_id), buy_data)
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not buy project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
     def close_project(self, project_id):
         # Closes the requested project. Once a project is closed, all traffic
         # is stopped, and the project is automatically sent for invoicing.
