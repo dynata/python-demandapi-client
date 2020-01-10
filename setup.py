@@ -2,13 +2,13 @@ from setuptools import setup, find_packages
 
 setup(
     name='dynata-demandapi-client',
-    version=0.1,
+    version=1.0,
     license="MIT",
     description="A Python client library for the Dynata Demand API",
     long_description="A Python client library for the Dynata Demand API",
     author="Ridley Larsen",
     author_email="Ridley.Larsen@Dynata.com",
-    url="https://github.com/researchnow/python-demandapi-client",
+    url="https://github.com/dynata/python-demandapi-client",
     download_url="https://pypi.python.org/pypi/dynata-demandapi-client",
     packages=find_packages(exclude=('tests', )),
     platforms=['Any'],
