@@ -52,6 +52,32 @@ class TestLineItemEndpoints(unittest.TestCase):
         self.assertEqual(responses.calls[0].response.json(), line_item_detailed_report_json)
 
     @responses.activate
+    def test_pause_line_item(self):
+        # Tests pausing a line item.
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/lineItems/180/pause'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200
+        )
+        # Response with error
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/lineItems/180/pause'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200
+        )
+
+        # Test successful response
+        self.api.pause_line_item(24, 180)
+        self.assertEqual(len(responses.calls), 1)
+
+        # Test error response
+        with self.assertRaises(DemandAPIError):
+            self.api.pause_line_item(24, 180)
+        self.assertEqual(len(responses.calls), 2)
+
+    @responses.activate
     def test_update_line_item(self):
         with open('./tests/test_files/update_line_item.json', 'r') as new_lineitem_file:
             update_lineitem_data = json.load(new_lineitem_file)
