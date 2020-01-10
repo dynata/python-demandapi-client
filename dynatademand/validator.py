@@ -19,6 +19,7 @@ ENDPOINTS = {
     'get_line_item': ['path', ],
     'get_line_items': ['path', 'query'],
     'get_line_item_detailed_report': ['path', ],
+    'launch_line_item': ['path', ],
     'pause_line_item': ['path', ],
     'update_line_item': ['path', 'body'],
 

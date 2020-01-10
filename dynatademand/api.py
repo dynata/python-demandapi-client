@@ -242,6 +242,24 @@ class DemandAPIClient(object):
         )
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
+    def launch_line_item(self, project_id, line_item_id):
+        # Starts traffic to a line item.
+        self.validator.validate_request(
+            'launch_line_item',
+            path_data={
+                'extProjectId': '{}'.format(project_id),
+                'extLineItemId': '{}'.format(line_item_id),
+            },
+        )
+        response_data = self._api_post('/projects/{}/lineItems/{}/launch'.format(project_id, line_item_id), {})
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not close project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
     def pause_line_item(self, project_id, line_item_id):
         # Stops traffic to a line item.
         self.validator.validate_request(
