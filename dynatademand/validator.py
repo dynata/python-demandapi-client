@@ -11,6 +11,7 @@ ENDPOINTS = {
     'create_project': ['body', ],
     'get_projects': ['query', ],
     'get_project': ['path', ],
+    'close_project': ['path', ],
     'update_project': ['path', 'body', ],
     'get_project_detailed_report': ['path', ],
 
@@ -19,6 +20,7 @@ ENDPOINTS = {
     'get_line_items': ['path', 'query'],
     'get_line_item_detailed_report': ['path', ],
     'launch_line_item': ['path', ],
+    'pause_line_item': ['path', ],
     'update_line_item': ['path', 'body'],
 
     # Events
