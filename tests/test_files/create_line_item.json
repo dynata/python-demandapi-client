@@ -1,0 +1,53 @@
+{
+  "extLineItemId": "lineItem001",
+  "title": "US College",
+  "countryISOCode": "US",
+  "languageISOCode": "en",
+  "surveyURL": "www.mysurvey.com/live/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>",
+  "surveyTestURL": "www.mysurvey.com/test/survey?pid=<#DubKnowledge[1500/Entity id]>&k2=<#Project[Secure Key 2]>&psid=<#IdParameter[Value]>",
+  "indicativeIncidence": 20,
+  "daysInField": 20,
+  "lengthOfInterview": 10,
+  "deliveryType": "BALANCED",
+  "requiredCompletes": 200,
+  "quotaPlan": {
+    "filters": [
+      {
+        "attributeId": "4091",
+        "options": [
+          "3",
+          "4"
+        ]
+      }
+    ],
+    "quotaGroups": [
+      {
+        "name": "Gender Distribution",
+        "quotaCells": [
+          {
+            "quotaNodes": [
+              {
+                "attributeId": "11",
+                "options": [
+                  "1"
+                ]
+              }
+            ],
+            "count": 130
+          },
+          {
+            "quotaNodes": [
+              {
+                "attributeId": "11",
+                "options": [
+                  "2"
+                ]
+              }
+            ],
+            "count": 70
+          }
+        ]
+      }
+    ]
+  }
+}

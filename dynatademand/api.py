@@ -207,6 +207,22 @@ class DemandAPIClient(object):
             )
         return response_data
 
+    def close_project(self, project_id):
+        # Closes the requested project. Once a project is closed, all traffic
+        # is stopped, and the project is automatically sent for invoicing.
+        self.validator.validate_request(
+            'close_project',
+            path_data={'extProjectId': '{}'.format(project_id)},
+        )
+        response_data = self._api_post('/projects/{}/close'.format(project_id), {})
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not close project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
     def get_project(self, project_id):
         self.validator.validate_request(
             'get_project',
@@ -245,6 +261,69 @@ class DemandAPIClient(object):
             path_data={'extProjectId': '{}'.format(project_id)},
         )
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
+
+    def add_line_item(self, project_id, lineitem_data):
+        '''
+            A line item is a project entity that exist for a specific market and
+            language that your survey is aimed at. It defines the target panelists
+            for the market that the survey is looking for, and the number of
+            completes required. A line item is our unit of work and is what
+            gets billed to you.
+        '''
+        '''
+            #TODO: Waiting on a valid request body and path schema.
+            self.validator.validate_request(
+                'create_line_item',
+                path_data={
+                    'extProjectId': '{}'.format(project_id)
+                },
+                request_body=lineitem_data
+            )
+        '''
+        response_data = self._api_post('/projects/{}/lineItems'.format(project_id), lineitem_data)
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not add line item. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
+    def launch_line_item(self, project_id, line_item_id):
+        # Starts traffic to a line item.
+        self.validator.validate_request(
+            'launch_line_item',
+            path_data={
+                'extProjectId': '{}'.format(project_id),
+                'extLineItemId': '{}'.format(line_item_id),
+            },
+        )
+        response_data = self._api_post('/projects/{}/lineItems/{}/launch'.format(project_id, line_item_id), {})
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not close project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
+    def pause_line_item(self, project_id, line_item_id):
+        # Stops traffic to a line item.
+        self.validator.validate_request(
+            'pause_line_item',
+            path_data={
+                'extProjectId': '{}'.format(project_id),
+                'extLineItemId': '{}'.format(line_item_id),
+            },
+        )
+        response_data = self._api_post('/projects/{}/lineItems/{}/pause'.format(project_id, line_item_id), {})
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not close project. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
 
     def get_line_item(self, project_id, line_item_id):
         self.validator.validate_request(
