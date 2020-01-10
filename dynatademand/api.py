@@ -289,6 +289,24 @@ class DemandAPIClient(object):
             )
         return response_data
 
+    def close_line_item(self, project_id, line_item_id):
+        # Starts traffic to a line item.
+        self.validator.validate_request(
+            'close_line_item',
+            path_data={
+                'extProjectId': '{}'.format(project_id),
+                'extLineItemId': '{}'.format(line_item_id),
+            },
+        )
+        response_data = self._api_post('/projects/{}/lineItems/{}/close'.format(project_id, line_item_id), {})
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not close line item. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
     def launch_line_item(self, project_id, line_item_id):
         # Starts traffic to a line item.
         self.validator.validate_request(
@@ -301,7 +319,7 @@ class DemandAPIClient(object):
         response_data = self._api_post('/projects/{}/lineItems/{}/launch'.format(project_id, line_item_id), {})
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
-                "Could not close project. Demand API responded with: {}".format(
+                "Could not launch line item. Demand API responded with: {}".format(
                     response_data
                 )
             )
@@ -319,7 +337,7 @@ class DemandAPIClient(object):
         response_data = self._api_post('/projects/{}/lineItems/{}/pause'.format(project_id, line_item_id), {})
         if response_data.get('status').get('message') != 'success':
             raise DemandAPIError(
-                "Could not close project. Demand API responded with: {}".format(
+                "Could not pause line item. Demand API responded with: {}".format(
                     response_data
                 )
             )

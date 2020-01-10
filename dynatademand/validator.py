@@ -17,6 +17,7 @@ ENDPOINTS = {
     'get_project_detailed_report': ['path', ],
 
     # Line items
+    'close_line_item': ['path', ],
     'create_line_item': ['path', 'body', ],
     'get_line_item': ['path', ],
     'get_line_items': ['path', 'query'],
