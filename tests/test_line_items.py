@@ -52,7 +52,7 @@ class TestLineItemEndpoints(unittest.TestCase):
         self.assertEqual(responses.calls[0].response.json(), line_item_detailed_report_json)
 
     @responses.activate
-    def test_launch_lineitem(self):
+    def test_launch_line_item(self):
         # Tests closing a project.
         responses.add(
             responses.POST,
