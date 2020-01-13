@@ -45,7 +45,7 @@ class DemandAPIClient(object):
         self._check_authentication()
         url = '{}{}'.format(self.base_url, uri)
         request_headers = {
-            'oauth_access_token': self._access_token,
+            'Authorization': 'Bearer {}'.format(self._access_token),
             'Content-Type': "application/json",
         }
         response = requests.post(url=url, json=payload, headers=request_headers)
@@ -60,7 +60,7 @@ class DemandAPIClient(object):
         self._check_authentication()
         url = '{}{}'.format(self.base_url, uri)
         request_headers = {
-            'oauth_access_token': self._access_token,
+            'Authorization': 'Bearer {}'.format(self._access_token),
             'Content-Type': "application/json",
         }
         response = requests.get(url=url, params=query_params, headers=request_headers)
