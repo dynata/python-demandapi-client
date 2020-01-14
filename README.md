@@ -6,13 +6,33 @@ A Python client library for the [Dynata Demand API](https://developers.dynata.co
 
 ## Setup
 
-The client requires environment variables to be set for the Dynata Demand API credentials. These can be found in `.env-example`.
+You can install the Demand API client with:
+
+    pip install dynatademand
+
+You can provide your Demand API credentials in a couple of ways. They can be set in the environment (a sample config is provided in `.env-example`) or you can provide them while creating the client object.
 
 ## Example Usage
 
-    demandapi = DemandAPIClient()
+```python
+    # You can optionally provide your credentials here instead of environment variables.
+    demandapi = DemandAPIClient("client_id", "username", "password")
     demandapi.authenticate()
-    demandapi.logout()
+
+    # Any function requiring one or more IDs should be provided as positional arguments.
+    demandapi.get_project(7)
+
+    # Provide query parameters as keyword-arguments.
+    demandapi.get_projects(state="LAUNCHED")
+
+    # Functions that send data in a request body accept a python dictionary.
+    # Your data will be validated against the schemas provided in the Demand API documentation.
+    project_data = {
+      'title': 'My New Survey',
+      ...
+    }
+    demandapi.create_project(project_data)
+```
 
 ## Supported API Functions
 
@@ -64,12 +84,22 @@ Information on [contributing](CONTRIBUTING.md).
 
 ## Testing
 
-To run the tests,
+To run the tests, you will need to install the development requirements to your environment. It's recommended to create a virtual environment for your installation to avoid any package conflicts.
 
+You can check out the code by running:
+
+    git clone https://github.com/dynata/python-demandapi-client.git
+    cd python-demandapi-client
+
+And you can create an environment by running:
+
+    # If you're using Python 2.7
     virtualenv venv
-    . venv/bin/activate
-    pip install -r requirements.txt
-    pytest tests
-    deactivate
 
-to run the tests for this project.
+    # Or if you're using Python 3:
+    python3 -m venv venv
+
+    source venv/bin/activate
+    pip install -r requirements.txt
+
+While your virtual environment is activated, you can run `pytest tests` to run the tests.
