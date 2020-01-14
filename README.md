@@ -2,7 +2,8 @@
 
 <a href="https://github.com/dynata/python-demandapi-client/actions?query=branch%3Adev"><img alt="GitHub Actions status" src="https://github.com/dynata/python-demandapi-client/workflows/python-tests/badge.svg"></a>
 
-A Python client library for the [Dynata Demand API](https://developers.dynata.com/)
+A Python client library for the [Dynata Demand API](https://developers.dynata.com/). There are also [go](https://github.com/researchnow/go-samplifyapi-client) and [.NET](https://github.com/researchnow/dotnet-samplifyapi-client) clients available.
+
 ## Setup
 
 The client requires environment variables to be set for the Dynata Demand API credentials. These can be found in `.env-example`.
