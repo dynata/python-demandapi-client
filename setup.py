@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='dynata-demandapi-client',
-    version="1.0.1",
+    version="1.0.2",
     license="MIT",
     description="A Python client library for the Dynata Demand API",
     long_description="A Python client library for the Dynata Demand API",
