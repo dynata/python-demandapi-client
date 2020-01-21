@@ -4,11 +4,6 @@ from __future__ import unicode_literals, print_function
 import unittest
 import responses
 
-try:
-    from unittest.mock import patch
-except ImportError:
-    from mock import patch
-
 from dynatademand.api import DemandAPIClient
 from dynatademand.errors import DemandAPIError
 
@@ -35,8 +30,16 @@ def api_test_url(endpoint):
 
 class AuthenticationTests(unittest.TestCase):
     def setUp(self):
-        self.client = DemandAPIClient(client_id="test_client_id", username="test_username", password="test_password", base_host=BASE_URL)
+        self.client = DemandAPIClient(
+            client_id="test_client_id",
+            username="test_username",
+            password="test_password",
+            base_host=BASE_URL
+        )
         self.assertEqual(self.client.client_id, "test_client_id")
+        self.assertEqual(self.client.username, "test_username")
+        self.assertEqual(self.client.password, "test_password")
+        self.assertEqual(self.client.base_host, BASE_URL)
 
     @responses.activate
     def test_authenticate(self):
