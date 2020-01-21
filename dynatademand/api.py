@@ -424,3 +424,33 @@ class DemandAPIClient(object):
             'get_sources',
         )
         return self._api_get('/sources')
+
+    def reconcile_project(self, project_id, file, message):
+        '''
+            Sends a reconciliation request
+        '''
+        """
+            # Awaiting valid body & path schemas
+            self.validator.validate_request(
+                'update_line_item',
+                path_data={
+                    'extProjectId': '{}'.format(project_id),
+                },
+                request_body={
+                    'file': file,
+                    'message': message,
+                },
+            )
+        """
+        self._check_authentication()
+        url = '{}{}'.format(self.base_url, '/projects/{}/reconcile'.format(project_id))
+        request_headers = {
+            'Authorization': 'Bearer {}'.format(self._access_token),
+            'Content-Type': "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        }
+        response = requests.post(url=url, data=file, headers=request_headers)
+        if response.status_code > 399:
+            raise DemandAPIError('Demand API request to {} failed with status {}. Response: {}'.format(
+                url, response.status_code, response.content
+            ))
+        return response.json()
