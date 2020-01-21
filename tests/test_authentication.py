@@ -28,69 +28,14 @@ class AuthenticationTestMissingCredentials(unittest.TestCase):
         with self.assertRaises(DemandAPIError):
             DemandAPIClient(client_id="test", username="test", base_host=BASE_URL)
 
-    @patch('os.getenv')
-    def test_authentication_params_with_env(self, mock_getenv):
-        mock_getenv.side_effect = [
-            "test_client_id",
-            "test_username",
-            "test_password",
-            BASE_URL
-        ]
-
-        # None of these should raise an error if the appropriate missing data is available in the environment.
-        DemandAPIClient(client_id="test", username="test", password="test", base_host=BASE_URL)
-        DemandAPIClient(username="test", password="test", base_host=BASE_URL)
-        DemandAPIClient(client_id="test", password="test", base_host=BASE_URL)
-        DemandAPIClient(client_id="test", username="test", base_host=BASE_URL)
-
-    @patch('os.getenv')
-    def test_missing_client_id(self, mock_getenv):
-        mock_getenv.side_effect = [
-            None,
-            "test_username",
-            "test_password",
-            BASE_URL
-        ]
-        with self.assertRaises(DemandAPIError):
-            DemandAPIClient()
-
-    @patch('os.getenv')
-    def test_missing_username(self, mock_getenv):
-        mock_getenv.side_effect = [
-            "test_client_id",
-            None,
-            "test_password",
-            BASE_URL
-        ]
-        with self.assertRaises(DemandAPIError):
-            DemandAPIClient()
-
-    @patch('os.getenv')
-    def test_missing_password(self, mock_getenv):
-        mock_getenv.side_effect = [
-            "test_client_id",
-            "test_username",
-            None,
-            BASE_URL
-        ]
-        with self.assertRaises(DemandAPIError):
-            DemandAPIClient()
-
 
 def api_test_url(endpoint):
     return "{}{}".format(BASE_URL, endpoint)
 
 
 class AuthenticationTests(unittest.TestCase):
-    @patch('os.getenv')
-    def setUp(self, mock_getenv):
-        mock_getenv.side_effect = [
-            "test_client_id",
-            "test_username",
-            "test_password",
-            BASE_URL
-        ]
-        self.client = DemandAPIClient()
+    def setUp(self):
+        self.client = DemandAPIClient(client_id="test_client_id", username="test_username", password="test_password", base_host=BASE_URL)
         self.assertEqual(self.client.client_id, "test_client_id")
 
     @responses.activate

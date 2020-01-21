@@ -7,25 +7,15 @@ from .validator import DemandAPIValidator
 
 class DemandAPIClient(object):
     def __init__(self, client_id=None, username=None, password=None, base_host=None):
-        if client_id is not None:
-            self.client_id = client_id
-        else:
-            self.client_id = os.getenv('DYNATA_DEMAND_CLIENT_ID', None)
-        if username is not None:
-            self.username = username
-        else:
-            self.username = os.getenv('DYNATA_DEMAND_USERNAME', None)
-        if password is not None:
-            self.password = password
-        else:
-            self.password = os.getenv('DYNATA_DEMAND_PASSWORD', None)
+        if None in [client_id, username, password]:
+            raise DemandAPIError('All authentication data is required.')
+        self.client_id = client_id
+        self.username = username
+        self.password = password
         if base_host is not None:
             self.base_host = base_host
         else:
             self.base_host = os.getenv('DYNATA_DEMAND_BASE_URL', default='https://api.researchnow.com')
-
-        if None in [self.client_id, self.username, self.password]:
-            raise DemandAPIError('All authentication data is required.')
 
         self._access_token = None
         self._refresh_token = None
