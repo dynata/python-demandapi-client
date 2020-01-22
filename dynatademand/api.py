@@ -63,9 +63,7 @@ class DemandAPIClient(object):
             'Authorization': 'Bearer {}'.format(self._access_token),
             'Content-Type': "application/json",
         }
-        print(url)
-        print(query_params)
-        print(request_headers)
+   
         response = requests.get(url=url, params=query_params, headers=request_headers)
         if response.status_code > 399:
             raise DemandAPIError('Demand API request to {} failed with status {}. Response: {}'.format(
