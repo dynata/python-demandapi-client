@@ -108,7 +108,7 @@ class TestProjectEndpoints(unittest.TestCase):
 
     @responses.activate
     def test_update_project(self):
-        # Tests creating a project. This also tests validating the project data as part of `api.create_project`.
+        # Tests updating a project.
         with open('./tests/test_files/update_project.json', 'r') as update_project_file:
             update_project_data = json.load(update_project_file)
 
@@ -133,3 +133,30 @@ class TestProjectEndpoints(unittest.TestCase):
         with self.assertRaises(DemandAPIError):
             self.api.update_project(24, update_project_data)
         self.assertEqual(len(responses.calls), 2)
+
+    @responses.activate
+    def test_reconcile_project(self):
+        # Tests reconciling a project.
+        message = 'testing reconciliation'
+        with open('./tests/test_files/Data+Quality+Request+Template.xlsx', 'rb') as file:
+            # Success response
+            responses.add(
+                responses.POST,
+                '{}/sample/v1/projects/24/reconcile'.format(BASE_HOST),
+                json={'status': {'message': 'success'}},
+                status=200)
+            # Error message included
+            responses.add(
+                responses.POST,
+                '{}/sample/v1/projects/24/reconcile'.format(BASE_HOST),
+                json={'status': {'message': 'error'}},
+                status=400)
+
+            # Test successful response.
+            self.api.reconcile_project(24, file, message)
+            self.assertEqual(len(responses.calls), 1)
+
+            # Test response with error included.
+            with self.assertRaises(DemandAPIError):
+                self.api.reconcile_project(24, file, message)
+            self.assertEqual(len(responses.calls), 2)
