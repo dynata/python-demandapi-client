@@ -431,5 +431,4 @@ class DemandAPIClient(object):
             'get_invoices_summary',
             query_params=kwargs
         )
-
         return self._api_get('/projects/invoices/summary', kwargs)
