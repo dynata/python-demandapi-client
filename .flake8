@@ -1,2 +1,2 @@
 [flake8]
-exclude=.git,.pytest_cache,venv
+exclude=.git,.pytest_cache,.venv,venv
