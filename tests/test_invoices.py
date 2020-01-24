@@ -38,7 +38,8 @@ class TestInvoiceEndpoints(unittest.TestCase):
                 content_type='application/pdf',
                 stream=True,
                 status=200)
-
-        self.api.get_invoices_summary(startDate='2019-06-12', endDate='2019-06-19', extProjectId='010528ef-8984-48c1-a06d-4dae730da027')
+        self.api.get_invoices_summary(startDate='2019-06-12',
+                                      endDate='2019-06-19',
+                                      extProjectId='010528ef-8984-48c1-a06d-4dae730da027')
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.headers['content-type'], 'application/pdf')
