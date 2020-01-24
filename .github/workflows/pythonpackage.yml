@@ -23,6 +23,7 @@ jobs:
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py > get-poetry.py
         python get-poetry.py --version 1.0.2 -y
         $HOME/.poetry/bin/poetry install
+        rm get-poetry.py
     - name: Lint with flake8
       run: |
         pip install flake8
