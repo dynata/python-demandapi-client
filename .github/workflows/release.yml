@@ -20,15 +20,17 @@ jobs:
     - name: Install Poetry
       run: |
         python -m pip install --upgrade pip
-        pip install poetry
-        poetry install
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py > get-poetry.py
+        python get-poetry.py --version 1.0.2 -y
+        $HOME/.poetry/bin/poetry install
+        rm get-poetry.py
     - name: Poetry - Set Version & Build
       run: |
-        poetry version ${{ steps.get_version.outputs.VERSION }}
-        poetry build
+        $HOME/.poetry/bin/poetry version ${{ steps.get_version.outputs.VERSION }}
+        $HOME/.poetry/bin/poetry build
     - name: Push to PyPI
       run: |
-        poetry publish --build --username "${{ secrets.PYPI_USERNAME }}" --password "${{ secrets.PYPI_PASSWORD }}" --no-interaction
+        $HOME/.poetry/bin/poetry publish --build --username "${{ secrets.PYPI_USERNAME }}" --password "${{ secrets.PYPI_PASSWORD }}" --no-interaction
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
