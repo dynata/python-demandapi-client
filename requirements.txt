@@ -1,5 +1,0 @@
-jsonschema==3.2.0
-pytest==4.6.6
-pytest-runner==5.2
-requests==2.22.0
-responses==0.10.6
