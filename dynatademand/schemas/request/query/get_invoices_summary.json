@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "startDate": {
+      "type": "string",
+      "description": "The format is YY-MM-DD"
+    },
+    "endDate": {
+      "type": "string",
+      "description": "The format is YY-MM-DD"
+    },
+    "extProjectId": {
+      "type": "string"
+    }
+  },
+  "required": []
+}
