@@ -20,6 +20,7 @@ ENDPOINTS = {
 
     # Invoices
     'get_invoice': ['path', ],
+    'get_invoices_summary': ['query', ],
 
     # Line items
     'close_line_item': ['path', ],

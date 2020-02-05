@@ -62,6 +62,7 @@ Links to the Demand API documentation are included for each function.
 [Get Project Detailed Report](https://developers.dynata.com/demand-api-reference/core-resources/projects/get-project-detailed-report): get_project_detailed_report(project_id)  
 [Get Pricing & Feasibility](https://developers.dynata.com/demand-api-reference/core-resources/pricing-feasibility/get-pricing-feasibility): get_feasibility(project_id)  
 [Get Invoice PDF](https://developers.dynata.com/demand-api-reference/billing_invoicing/invoicing/get-invoices): get_invoice(project_id)  
+[Get Invoices Summary PDF](https://developers.dynata.com): get_invoices_summary(\*\*kwargs)
 
 ### Line Item Functions
 
