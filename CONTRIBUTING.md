@@ -6,9 +6,10 @@ This is an InnerSource python project. It is the work of someone who thought it 
 
 This repository is maintained by
 
-1. [Ridley Larsen](@RidleyLarsen)
-2. [Bradley Wogsland](@wogsland)
-3. [Nathan Workman](@nathanworkman)
+1. [Ridley Larsen](https://github.com/RidleyLarsen)
+1. [Uthayakumar Kumarasamy](https://github.com/ukumark)
+1. [Bradley Wogsland](https://github.com/wogsland)
+1. [Nathan Workman](https://github.com/nathanworkman)
 
 ### Community Guidelines
 
