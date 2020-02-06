@@ -425,6 +425,13 @@ class DemandAPIClient(object):
         )
         return self._api_get('/sources')
 
+    def get_invoices_summary(self, **kwargs):
+        self.validator.validate_request(
+            'get_invoices_summary',
+            query_params=kwargs
+        )
+        return self._api_get('/projects/invoices/summary', kwargs)
+
     def reconcile_project(self, project_id, file, message):
         '''
             Sends a reconciliation request
