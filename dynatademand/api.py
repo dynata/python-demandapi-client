@@ -363,11 +363,12 @@ class DemandAPIClient(object):
                 'action': '{}'.format(action),
             },
         )
-        response_data = self._api_post('/projects/{}/lineItems/{}/quotaCells/{}/{}'.format(project_id, line_item_id, quota_cell_id, action), {})
+        response_data = self._api_post('/projects/{}/lineItems/{}/quotaCells/{}/{}'.format(
+            project_id, line_item_id, quota_cell_id, action), {})
         if response_data.get('status').get('message') != 'success':
-            raise DemandAPIError(
-                "Could not {} quotacell. Demand API responded with: {}".format(action,
-                    response_data
+             raise DemandAPIError(
+                "Could not {} quotacell. Demand API responded with: {}".format(
+                    action,response_data
                 )
             )
         return response_data

@@ -175,7 +175,6 @@ class TestLineItemEndpoints(unittest.TestCase):
             json={'status': {'message': 'error'}},
             status=200
         )
-
         # Tests pausing a quotacell.
         responses.add(
             responses.POST,
@@ -195,7 +194,6 @@ class TestLineItemEndpoints(unittest.TestCase):
         self.api.set_quotacell_status(24, 180, 1, "launch")
         self.assertEqual(len(responses.calls), 1)
         
-
         # Test error response for launch quotacell.
         with self.assertRaises(DemandAPIError):
             self.api.set_quotacell_status(24, 180, 1, "launch")
