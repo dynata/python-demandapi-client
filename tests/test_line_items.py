@@ -193,7 +193,7 @@ class TestLineItemEndpoints(unittest.TestCase):
         # Test successful response for launch quotacell.
         self.api.set_quotacell_status(24, 180, 1, "launch")
         self.assertEqual(len(responses.calls), 1)
-        
+
         # Test error response for launch quotacell.
         with self.assertRaises(DemandAPIError):
             self.api.set_quotacell_status(24, 180, 1, "launch")
