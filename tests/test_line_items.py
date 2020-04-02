@@ -160,6 +160,57 @@ class TestLineItemEndpoints(unittest.TestCase):
         self.assertEqual(len(responses.calls), 2)
 
     @responses.activate
+    def test_set_quotacell_status(self):
+        # Tests launching a quotacell.
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/lineItems/180/quotaCells/1/launch'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200
+        )
+        # Response with error launching a quotacell.
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/lineItems/180/quotaCells/1/launch'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200
+        )
+
+        # Tests pausing a quotacell.
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/lineItems/180/quotaCells/1/pause'.format(BASE_HOST),
+            json={'status': {'message': 'success'}},
+            status=200
+        )
+        # Response with error for pausing a quotacell
+        responses.add(
+            responses.POST,
+            '{}/sample/v1/projects/24/lineItems/180/quotaCells/1/pause'.format(BASE_HOST),
+            json={'status': {'message': 'error'}},
+            status=200
+        )
+
+        # Test successful response for launch quotacell.
+        self.api.set_quotacell_status(24, 180, 1, "launch")
+        self.assertEqual(len(responses.calls), 1)
+        
+
+        # Test error response for launch quotacell.
+        with self.assertRaises(DemandAPIError):
+            self.api.set_quotacell_status(24, 180, 1, "launch")
+        self.assertEqual(len(responses.calls), 2)
+
+        # Test successful response for pause quotacell.
+        self.api.set_quotacell_status(24, 180, 1, "pause")
+        self.assertEqual(len(responses.calls), 3)
+
+        # Test error response for pause quotacell.
+        with self.assertRaises(DemandAPIError):
+            self.api.set_quotacell_status(24, 180, 1, "pause")
+        self.assertEqual(len(responses.calls), 4)
+
+    @responses.activate
     def test_update_line_item(self):
         # Tests updating a line item.
         with open('./tests/test_files/update_line_item.json', 'r') as new_lineitem_file:

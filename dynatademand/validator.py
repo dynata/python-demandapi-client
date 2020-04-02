@@ -32,6 +32,9 @@ ENDPOINTS = {
     'pause_line_item': ['path', ],
     'update_line_item': ['path', 'body'],
 
+    # quotaCells
+    'set_quotacell_status': ['path', ],
+
     # Events
     'get_events': ['query', ],
     'get_event': ['path', ],

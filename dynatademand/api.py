@@ -352,6 +352,26 @@ class DemandAPIClient(object):
             )
         return response_data
 
+    def set_quotacell_status(self, project_id, line_item_id, quota_cell_id, action):
+        # Stops traffic to a line item.
+        self.validator.validate_request(
+            'set_quotacell_status',
+            path_data={
+                'extProjectId': '{}'.format(project_id),
+                'extLineItemId': '{}'.format(line_item_id),
+                'quotaCellId': '{}'.format(quota_cell_id),
+                'action': '{}'.format(action),
+            },
+        )
+        response_data = self._api_post('/projects/{}/lineItems/{}/quotaCells/{}/{}'.format(project_id, line_item_id, quota_cell_id, action), {})
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not {} quotacell. Demand API responded with: {}".format(action,
+                    response_data
+                )
+            )
+        return response_data
+
     def get_line_item(self, project_id, line_item_id):
         self.validator.validate_request(
             'get_line_item',
