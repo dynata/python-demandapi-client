@@ -1,0 +1,58 @@
+{
+    "countryISOCode": "US",
+    "languageISOCode": "en",
+    "description": "Test Quota Template",
+    "name": "Test Template",
+    "quotaPlan": {
+        "filters": [
+            {
+                "attributeId": "4091",
+                "options": [
+                    "3",
+                    "4"
+                ],
+                "operator": null
+            }
+        ],
+        "quotaGroups": [
+            {
+                "name": "Gender distribution",
+                "quotaCells": [
+                    {
+                        "quotaNodes": [
+                            {
+                                "attributeId": "11",
+                                "options": [
+                                    "1"
+                                ],
+                                "operator": null
+                            }
+                        ],
+                        "count": 0,
+                        "perc": 30,
+                        "quotaCellId": null
+                    },
+                    {
+                        "quotaNodes": [
+                            {
+                                "attributeId": "11",
+                                "options": [
+                                    "2"
+                                ],
+                                "operator": null
+                            }
+                        ],
+                        "count": 0,
+                        "perc": 70,
+                        "quotaCellId": null
+                    }
+                ],
+                "quotaGroupId": null
+            }
+        ]
+    },
+    "tags": [
+        "ABC Ltd",
+        "Shopping"
+    ]
+}

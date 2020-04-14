@@ -1,0 +1,131 @@
+{
+    "type": "object",
+    "title": "New Template",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Name of the template"
+      },
+      "description": {
+        "type": "string",
+        "description": "template description"
+      },
+      "countryISOCode": {
+        "type": "string",
+        "description": "2 letter ISO Country Code",
+        "minLength": 2,
+        "maxLength": 2
+      },
+      "languageISOCode": {
+        "type": "string",
+        "description": "2 letter ISO Language Code",
+        "minLength": 2,
+        "maxLength": 2
+      },
+      "tags": {
+        "type": "array",
+        "description": "keyword tags"
+      },
+      "quotaPlan": {
+        "type": "object",
+        "title": "Quota Plan",
+        "description": "Defines the type of respondents you want to invite for the survey",
+        "properties": {
+          "filters": {
+            "type": "array",
+            "description": "Filters are minimum set of targeting that every respondent must have in order to qualify for the study. Only attributes that have `isAllowedInFilters = true` is allowed to be used in `filters`",
+            "items": {
+              "type": "object",
+              "properties": {
+                "attributeId": {
+                  "type": "string",
+                  "description": "The attribute you want to target respondents on"
+                },
+                "options": {
+                  "type": "array",
+                  "description": "The options of the attribute you want to target respondents on",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "operator": {
+                  "type": "string",
+                  "enum": [
+                    "exclude",
+                    "include"
+                  ],
+                  "default": "include",
+                  "description": "The operator to use for the attribute options."
+                }
+              }
+            }
+          },
+          "quotaGroups": {
+            "type": "array",
+            "description": "Quota groups define the allocated targeting attributes for panelists within this line item. Only attributes that have `isAllowedInQuotas = true` is allowed in `quotaGroups`.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "A quota group name of your choosing"
+                },
+                "quotaCells": {
+                  "type": "array",
+                  "description": "Quota Cells define the percentage allocation for the required targeting. A quota cell is made up of a collection of quota Nodes",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "quotaNodes": {
+                        "type": "array",
+                        "description": "Quota Nodes define the collection of attributes and options being targeted.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "attributeId": {
+                              "type": "string",
+                              "description": "The attribute you want to target respondents on"
+                            },
+                            "options": {
+                              "type": "array",
+                              "description": "The options of the attribute you want to target respondents on",
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "operator": {
+                              "type": "string",
+                              "enum": [
+                                "exclude",
+                                "include"
+                              ],
+                              "default": "include",
+                              "description": "**Deprecated field** The operator to use for the attribute options."
+                            }
+                          }
+                        }
+                      },
+                      "count": {
+                        "type": "integer",
+                        "description": "The count of respondents you want to qualify for the defined quota cell"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "required": [
+      "name",
+      "countryISOCode",
+      "languageISOCode",
+      "description",
+      "quotaPlan"
+    ]
+  }
+  

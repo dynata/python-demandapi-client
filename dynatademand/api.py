@@ -71,6 +71,23 @@ class DemandAPIClient(object):
         if response.headers['content-type'] == 'application/pdf':
             return response.content
         return response.json()
+    
+    def _api_delete(self, uri):
+        # Send an authenticated DELETE request to an API endpoint.
+        self._check_authentication()
+        url = '{}{}'.format(self.base_url, uri)
+        request_headers = {
+            'Authorization': 'Bearer {}'.format(self._access_token),
+            'Content-Type': "application/json",
+        }
+        response = requests.delete(url=url, headers=request_headers)
+        if response.status_code > 399:
+            raise DemandAPIError('Demand API request to {} failed with status {}. Response: {}'.format(
+                url, response.status_code, response.content
+            ))
+        if response.headers['content-type'] == 'application/pdf':
+            return response.content
+        return response.json()
 
     def authenticate(self):
         # Sends the authentication data to the access token endpoint.
@@ -461,3 +478,38 @@ class DemandAPIClient(object):
                 url, response.status_code, response.content
             ))
         return response.json()
+
+    def create_template(self, template):
+        # TODO: Waiting on a valid path and request body schema.
+        # self.validator.validate_request(
+        #     'create_template',
+        #     request_body=template,
+        # )
+        return self._api_post('/templates/quotaplan', template)
+    
+    def update_template(self, id, template):
+        # TODO: Waiting on a valid path and request body schema.
+        # self.validator.validate_request(
+        #     'update_template',
+        #     path_data={'id': '{}'.format(id)},
+        #     request_body=template,
+        # )
+        return self._api_post('/templates/quotaplan/{}'.format(id), template)
+    
+    def delete_template(self, id):
+        self.validator.validate_request(
+             'delete_template',
+              path_data={'id': '{}'.format(id)},
+         )
+        return self._api_delete('/templates/quotaplan/{}'.format(id))
+
+    def get_templates(self, country, lang, **kwargs):
+        self.validator.validate_request(
+            'get_templates',
+            path_data={
+                'countryCode': '{}'.format(country),
+                'languageCode': '{}'.format(lang)
+            },
+            query_params=kwargs,
+        )
+        return self._api_get('/templates/quotaplan/{}/{}'.format(country, lang), kwargs)
