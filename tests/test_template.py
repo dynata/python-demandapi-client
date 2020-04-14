@@ -23,7 +23,7 @@ class TestTemplateEndpoints(unittest.TestCase):
         # Success response
         responses.add(
             responses.GET,
-            '{}/sample/v1/templates/quotaplan/{}/{}'.format(BASE_HOST,'US','en'),
+            '{}/sample/v1/templates/quotaplan/{}/{}'.format(BASE_HOST, 'US', 'en'),
             json=options_json,
             status=200)
         self.api.get_templates('US', 'en')
