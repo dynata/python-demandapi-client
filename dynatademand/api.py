@@ -498,8 +498,8 @@ class DemandAPIClient(object):
 
     def delete_template(self, id):
         self.validator.validate_request(
-             'delete_template',
-              path_data={'id': '{}'.format(id)},
+            'delete_template',
+            path_data={'id': '{}'.format(id)},
          )
         return self._api_delete('/templates/quotaplan/{}'.format(id))
 
