@@ -6,7 +6,6 @@ import unittest
 import responses
 
 from dynatademand.api import DemandAPIClient
-from dynatademand.errors import DemandAPIError
 
 BASE_HOST = "http://test-url.example"
 
@@ -20,7 +19,9 @@ class TestTemplateEndpoints(unittest.TestCase):
         # Tests getting all templates.
         with open('./tests/test_files/get_templates.json', 'r') as options:
             options_json = json.load(options)
-        responses.add(responses.GET, '{}/sample/v1/templates/quotaplan/{}/{}'.format(BASE_HOST, 'US', 'en'), json=options_json, status=200)
+        responses.add(responses.GET, '{}/sample/v1/templates/quotaplan/{}/{}'.format(BASE_HOST, 'US', 'en'),
+        json=options_json,
+        status=200)
         self.api.get_templates('US', 'en')
         self.assertEqual(len(responses.calls), 1)
 
@@ -65,8 +66,7 @@ class TestTemplateEndpoints(unittest.TestCase):
         # Test success response
         self.api.update_template(1, new_template_data)
         self.assertEqual(len(responses.calls), 1)
-    
-    
+
     @responses.activate
     def test_delete_template(self):
         # Tests deleteing templates

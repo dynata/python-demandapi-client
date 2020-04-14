@@ -71,7 +71,7 @@ class DemandAPIClient(object):
         if response.headers['content-type'] == 'application/pdf':
             return response.content
         return response.json()
-    
+
     def _api_delete(self, uri):
         # Send an authenticated DELETE request to an API endpoint.
         self._check_authentication()
@@ -486,7 +486,7 @@ class DemandAPIClient(object):
         #     request_body=template,
         # )
         return self._api_post('/templates/quotaplan', template)
-    
+
     def update_template(self, id, template):
         # TODO: Waiting on a valid path and request body schema.
         # self.validator.validate_request(
@@ -495,7 +495,7 @@ class DemandAPIClient(object):
         #     request_body=template,
         # )
         return self._api_post('/templates/quotaplan/{}'.format(id), template)
-    
+
     def delete_template(self, id):
         self.validator.validate_request(
              'delete_template',
