@@ -22,10 +22,10 @@ class TestTemplateEndpoints(unittest.TestCase):
             options_json = json.load(options)
         # Success response
         responses.add(
-        responses.GET,
-        '{}/sample/v1/templates/quotaplan/{}/{}'.format(BASE_HOST,'US','en'),
-        json=options_json,
-        status=200)
+            responses.GET,
+            '{}/sample/v1/templates/quotaplan/{}/{}'.format(BASE_HOST,'US','en'),
+            json=options_json,
+            status=200)
         self.api.get_templates('US', 'en')
         self.assertEqual(len(responses.calls), 1)
 
