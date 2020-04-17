@@ -74,9 +74,8 @@ Links to the Demand API documentation are included for each function.
 [Pause Line Item](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/post-lineitem-pause): pause_line_item(project_id, line_item_id)  
 [Update Line Item](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/post-lineitem): update_line_item(project_id, line_item_id, line_item_data)  
 [Get Line Item Detailed Report](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/get-detailed-line-item): get_line_item_detailed_report(project_id, line_item_id) 
-
-### todo: will update this once it is published in developers.dynata.com
-[Set QuotaCell Status](): set_quotacell_status(project_id, line_item_id, quota_cell_id, pause)  
+[Launch Quota cell](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/post-quota-cell-launch): set_quotacell_status(project_id, line_item_id, quota_cell_id, launch)  
+[Pause Quota cell](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/post-quota-cell-pause): set_quotacell_status(project_id, line_item_id, quota_cell_id, pause)  
 
 ### Misc Functions
 
