@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "properties": {
+        "extProjectId": {
+            "type": "string",
+            "required": true
+        },
+        "extLineItemId": {
+            "type": "string",
+            "required": true
+        },
+        "quotaCellId": {
+            "type": "string",
+            "required": true
+        },
+        "action": {
+            "type": "string",
+            "required": true
+        }
+    },
+    "required": [
+        "extProjectId",
+        "extLineItemId",
+        "quotaCellId",
+        "action"
+    ]
+}
