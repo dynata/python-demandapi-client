@@ -28,6 +28,7 @@ class TestCategoryEndpoints(unittest.TestCase):
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.json(), survey_topics_json)
 
+
 class TestStudyMetadataEndpoint(unittest.TestCase):
     def setUp(self):
         self.api = DemandAPIClient(client_id='test', username='testuser', password='testpass', base_host=BASE_HOST)
