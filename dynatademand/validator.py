@@ -53,6 +53,12 @@ ENDPOINTS = {
 
     # Supplier Sources
     'get_sources': [],
+
+    # Template
+    'create_template': ['path', 'body', ],
+    'update_template': ['path', 'body', ],
+    'delete_template': ['path', ],
+    'get_templates': ['path', 'query', ],
 }
 
 
