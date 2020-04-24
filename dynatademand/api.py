@@ -158,6 +158,9 @@ class DemandAPIClient(object):
         )
         return self._api_get('/countries', kwargs)
 
+    def get_study_metadata(self):
+        return self._api_get('/studyMetadata')
+
     def get_event(self, event_id):
         self.validator.validate_request(
             'get_event',

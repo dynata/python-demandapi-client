@@ -27,3 +27,22 @@ class TestCategoryEndpoints(unittest.TestCase):
         self.api.get_survey_topics()
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.json(), survey_topics_json)
+
+
+class TestStudyMetadataEndpoint(unittest.TestCase):
+    def setUp(self):
+        self.api = DemandAPIClient(client_id='test', username='testuser', password='testpass', base_host=BASE_HOST)
+        self.api._access_token = 'Bearer testtoken'
+
+    @responses.activate
+    def test_get_study_metadata(self):
+        with open('./tests/test_files/get_study_metadata.json', 'r') as survey_metadata_file:
+            survey_metadata_json = json.load(survey_metadata_file)
+        responses.add(
+            responses.GET,
+            '{}/sample/v1/studyMetadata'.format(BASE_HOST),
+            json=survey_metadata_json,
+            status=200)
+        self.api.get_study_metadata()
+        self.assertEqual(len(responses.calls), 1)
+        self.assertEqual(responses.calls[0].response.json(), survey_metadata_json)

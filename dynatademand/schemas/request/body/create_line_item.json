@@ -45,12 +45,7 @@
     "deliveryType": {
       "type": "string",
       "default": "BALANCED",
-      "description": "The plan on how responses will flow into the survey.",
-      "enum": [
-        "SLOW",
-        "BALANCED",
-        "FAST"
-      ]
+      "description": "The plan on how responses will flow into the survey."
     },
     "sources": {
       "type": "array",

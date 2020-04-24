@@ -55,6 +55,20 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "studyType": {
+          "type": "array",
+          "description": "List of possible types of survey.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "surveyRequirements": {
+          "type": "array",
+          "description": "List of possible requirements for a survey.",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -118,12 +132,7 @@
           "deliveryType": {
             "type": "string",
             "default": "BALANCED",
-            "description": "The plan on how responses will flow into the survey.",
-            "enum": [
-              "SLOW",
-              "BALANCED",
-              "FAST"
-            ]
+            "description": "The plan on how responses will flow into the survey."
           },
           "sources": {
             "type": "array",
