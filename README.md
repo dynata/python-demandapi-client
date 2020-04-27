@@ -62,6 +62,7 @@ Links to the Demand API documentation are included for each function.
 [Get Project Detailed Report](https://developers.dynata.com/demand-api-reference/core-resources/projects/get-project-detailed-report): get_project_detailed_report(project_id)  
 [Get Pricing & Feasibility](https://developers.dynata.com/demand-api-reference/core-resources/pricing-feasibility/get-pricing-feasibility): get_feasibility(project_id)  
 [Get Invoice PDF](https://developers.dynata.com/demand-api-reference/billing_invoicing/invoicing/get-invoices): get_invoice(project_id)  
+[Get Invoices Summary PDF](https://developers.dynata.com): get_invoices_summary(\*\*kwargs)
 
 ### Line Item Functions
 
@@ -72,7 +73,9 @@ Links to the Demand API documentation are included for each function.
 [Launch Line Item](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/post-lineitem-launch): launch_line_item(project_id, line_item_id)  
 [Pause Line Item](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/post-lineitem-pause): pause_line_item(project_id, line_item_id)  
 [Update Line Item](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/post-lineitem): update_line_item(project_id, line_item_id, line_item_data)  
-[Get Line Item Detailed Report](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/get-detailed-line-item): get_line_item_detailed_report(project_id, line_item_id)  
+[Get Line Item Detailed Report](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/get-detailed-line-item): get_line_item_detailed_report(project_id, line_item_id) 
+[Launch Quota cell](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/post-quota-cell-launch): set_quotacell_status(project_id, line_item_id, quota_cell_id, launch)  
+[Pause Quota cell](https://developers.dynata.com/demand-api-reference/core-resources/lineitems/post-quota-cell-pause): set_quotacell_status(project_id, line_item_id, quota_cell_id, pause)  
 
 ### Misc Functions
 

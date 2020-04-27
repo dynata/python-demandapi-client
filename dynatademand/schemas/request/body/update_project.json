@@ -25,6 +25,18 @@
           "items": {
             "type": "string"
           }
+        },
+        "studyType": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "studyRequirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

@@ -1,0 +1,20 @@
+{
+    "category": {
+        "studyRequirements": [
+            {
+                "allowed": false,
+                "description": "PII Collection",
+                "id": "PII_COLLECTION",
+                "name": "PII Collection"
+            }
+        ]
+    },
+    "deliveryTypes": [
+        {
+            "allowed": true,
+            "description": "Completes come in at an even pace throughout fielding",
+            "id": "SLOW",
+            "name": "Slow"
+        }
+    ]
+}

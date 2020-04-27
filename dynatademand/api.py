@@ -72,6 +72,23 @@ class DemandAPIClient(object):
             return response.content
         return response.json()
 
+    def _api_delete(self, uri):
+        # Send an authenticated DELETE request to an API endpoint.
+        self._check_authentication()
+        url = '{}{}'.format(self.base_url, uri)
+        request_headers = {
+            'Authorization': 'Bearer {}'.format(self._access_token),
+            'Content-Type': "application/json",
+        }
+        response = requests.delete(url=url, headers=request_headers)
+        if response.status_code > 399:
+            raise DemandAPIError('Demand API request to {} failed with status {}. Response: {}'.format(
+                url, response.status_code, response.content
+            ))
+        if response.headers['content-type'] == 'application/pdf':
+            return response.content
+        return response.json()
+
     def authenticate(self):
         # Sends the authentication data to the access token endpoint.
         url = '{}/token/password'.format(self.auth_base_url)
@@ -157,6 +174,9 @@ class DemandAPIClient(object):
             query_params=kwargs,
         )
         return self._api_get('/countries', kwargs)
+
+    def get_study_metadata(self):
+        return self._api_get('/studyMetadata')
 
     def get_event(self, event_id):
         self.validator.validate_request(
@@ -352,6 +372,27 @@ class DemandAPIClient(object):
             )
         return response_data
 
+    def set_quotacell_status(self, project_id, line_item_id, quota_cell_id, action):
+        # Stops traffic to a line item.
+        self.validator.validate_request(
+            'set_quotacell_status',
+            path_data={
+                'extProjectId': '{}'.format(project_id),
+                'extLineItemId': '{}'.format(line_item_id),
+                'quotaCellId': '{}'.format(quota_cell_id),
+                'action': '{}'.format(action),
+            },
+        )
+        response_data = self._api_post('/projects/{}/lineItems/{}/quotaCells/{}/{}'.format(
+            project_id, line_item_id, quota_cell_id, action), {})
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not {} quotacell. Demand API responded with: {}".format(
+                    action, response_data
+                )
+            )
+        return response_data
+
     def get_line_item(self, project_id, line_item_id):
         self.validator.validate_request(
             'get_line_item',
@@ -425,6 +466,13 @@ class DemandAPIClient(object):
         )
         return self._api_get('/sources')
 
+    def get_invoices_summary(self, **kwargs):
+        self.validator.validate_request(
+            'get_invoices_summary',
+            query_params=kwargs
+        )
+        return self._api_get('/projects/invoices/summary', kwargs)
+
     def reconcile_project(self, project_id, file, message):
         '''
             Sends a reconciliation request
@@ -454,3 +502,38 @@ class DemandAPIClient(object):
                 url, response.status_code, response.content
             ))
         return response.json()
+
+    def create_template(self, template):
+        # TODO: Waiting on a valid path and request body schema.
+        # self.validator.validate_request(
+        #     'create_template',
+        #     request_body=template,
+        # )
+        return self._api_post('/templates/quotaplan', template)
+
+    def update_template(self, id, template):
+        # TODO: Waiting on a valid path and request body schema.
+        # self.validator.validate_request(
+        #     'update_template',
+        #     path_data={'id': '{}'.format(id)},
+        #     request_body=template,
+        # )
+        return self._api_post('/templates/quotaplan/{}'.format(id), template)
+
+    def delete_template(self, id):
+        self.validator.validate_request(
+            'delete_template',
+            path_data={'id': '{}'.format(id)},
+         )
+        return self._api_delete('/templates/quotaplan/{}'.format(id))
+
+    def get_templates(self, country, lang, **kwargs):
+        self.validator.validate_request(
+            'get_templates',
+            path_data={
+                'countryCode': '{}'.format(country),
+                'languageCode': '{}'.format(lang)
+            },
+            query_params=kwargs,
+        )
+        return self._api_get('/templates/quotaplan/{}/{}'.format(country, lang), kwargs)

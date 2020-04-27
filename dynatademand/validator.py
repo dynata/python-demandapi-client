@@ -20,6 +20,7 @@ ENDPOINTS = {
 
     # Invoices
     'get_invoice': ['path', ],
+    'get_invoices_summary': ['query', ],
 
     # Line items
     'close_line_item': ['path', ],
@@ -30,6 +31,9 @@ ENDPOINTS = {
     'launch_line_item': ['path', ],
     'pause_line_item': ['path', ],
     'update_line_item': ['path', 'body'],
+
+    # quotaCells
+    'set_quotacell_status': ['path', ],
 
     # Events
     'get_events': ['query', ],
@@ -49,6 +53,12 @@ ENDPOINTS = {
 
     # Supplier Sources
     'get_sources': [],
+
+    # Template
+    'create_template': ['path', 'body', ],
+    'update_template': ['path', 'body', ],
+    'delete_template': ['path', ],
+    'get_templates': ['path', 'query', ],
 }
 
 
