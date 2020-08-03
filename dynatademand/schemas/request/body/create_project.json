@@ -111,6 +111,7 @@
           },
           "surveyURL": {
             "type": "string",
+            "maxLength": 2000,
             "description": "Survey URL to send panelist into. "
           },
           "surveyTestURL": {
