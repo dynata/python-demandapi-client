@@ -10,7 +10,7 @@ from dynatademand.api import DemandAPIClient
 BASE_HOST = "http://test-url.example"
 
 
-class TestUsersEndpoints(unittest.TestCase):
+class TestTeamsEndpoints(unittest.TestCase):
     def setUp(self):
         self.api = DemandAPIClient(client_id='test', username='testuser', password='testpass', base_host=BASE_HOST)
         self.api._access_token = 'Bearer testtoken'
