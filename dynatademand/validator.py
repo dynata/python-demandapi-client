@@ -20,7 +20,7 @@ ENDPOINTS = {
     'get_project_permissions': ['path', ],
     'upsert_project_permissions': ['path', 'body', ],
 
-    # Roles 
+    # Roles
     'get_roles': ['query', ],
 
     # Invoices
