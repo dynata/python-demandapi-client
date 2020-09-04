@@ -21,8 +21,8 @@ ENDPOINTS = {
     'upsert_project_permissions':['path', 'body', ],
 
     # Roles 
-    'get_roles': ['query', ]
-    
+    'get_roles': ['query', ],
+
     # Invoices
     'get_invoice': ['path', ],
     'get_invoices_summary': ['query', ],

@@ -1,0 +1,23 @@
+{
+    "companies": [
+        {
+            "default": true,
+            "defaultRole": "PROJECT_MANAGER",
+            "id": 51,
+            "name": "Samplify Web",
+            "teams": [
+                {
+                    "default": true,
+                    "id": 139,
+                    "name": "All Users",
+                    "role": "PROJECT_MANAGER",
+                    "status": "ACTIVE"
+                }
+            ]
+        }
+    ],
+    "email": "samplifyweb@dynata.com",
+    "fullName": "Monica Faloola Gellar",
+    "id": 71,
+    "userName": "monicagellarrr"
+}
