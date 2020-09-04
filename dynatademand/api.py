@@ -291,6 +291,44 @@ class DemandAPIClient(object):
         )
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
+    def get_user_info(self):
+        return self._api_get('/users/info')
+
+    def get_company_users(self):
+        return self._api_get('/users')
+
+    def get_company_teams(self):
+        return self._api_get('/teams')
+
+    def get_roles(self, **kwargs):
+        self.validator.validate_request(
+            'get_roles',
+            query_params=kwargs
+        )
+        return self._api_get('/roles', kwargs)
+
+    def get_project_permissions(self, project_id):
+        self.validator.validate_request(
+            'get_project_permissions',
+            path_data={'extProjectId': '{}'.format(project_id)},
+        )
+        return self._api_get('/projects/{}/permissions'.format(project_id))
+
+    def upsert_project_permissions(self, project_id, upsert_permissions_data):
+        self.validator.validate_request(
+            'upsert_project_permissions', 
+            path_data={'extProjectId': '{}'.format(project_id)},
+            request_body=upsert_permissions_data,
+        )
+        response_data = self._api_post('/projects/{}/permissions'.format(project_id), upsert_permissions_data)
+        if response_data.get('status').get('message') != 'success':
+            raise DemandAPIError(
+                "Could not upsert project permissions. Demand API responded with: {}".format(
+                    response_data
+                )
+            )
+        return response_data
+
     def add_line_item(self, project_id, lineitem_data):
         '''
             A line item is a project entity that exist for a specific market and

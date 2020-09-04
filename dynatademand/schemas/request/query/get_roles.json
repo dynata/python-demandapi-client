@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "This is the name of the role. eg: manager"
+        },
+        "id": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": []
+}
