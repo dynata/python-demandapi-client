@@ -292,7 +292,7 @@ class DemandAPIClient(object):
         return self._api_get('/projects/{}/detailedReport'.format(project_id))
 
     def get_user_info(self):
-        return self._api_get('/users/info')
+        return self._api_get('/user')
 
     def get_company_users(self):
         return self._api_get('/users')
