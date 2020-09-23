@@ -21,7 +21,7 @@ class TestUsersEndpoints(unittest.TestCase):
         with open('./tests/test_files/get_user_info.json', 'r') as user_info:
             user_info_json = json.load(user_info)
         # Success response
-        responses.add(responses.GET,'{}/sample/v1/user'.format(BASE_HOST), json=user_info_json, status=200)
+        responses.add(responses.GET, '{}/sample/v1/user'.format(BASE_HOST), json=user_info_json, status=200)
         self.api.get_user_info()
         self.assertEqual(len(responses.calls), 1)
 
@@ -31,6 +31,6 @@ class TestUsersEndpoints(unittest.TestCase):
         with open('./tests/test_files/get_company_users.json', 'r') as company_users:
             company_users_json = json.load(company_users)
         # Success response
-        responses.add(responses.GET,'{}/sample/v1/users'.format(BASE_HOST), json=company_users_json, status=200)
+        responses.add(responses.GET, '{}/sample/v1/users'.format(BASE_HOST), json=company_users_json, status=200)
         self.api.get_company_users()
         self.assertEqual(len(responses.calls), 1)

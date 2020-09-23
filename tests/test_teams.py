@@ -21,6 +21,6 @@ class TestTeamsEndpoints(unittest.TestCase):
         with open('./tests/test_files/get_teams.json', 'r') as teams:
             teams_json = json.load(teams)
         # Success response
-        responses.add(responses.GET,'{}/sample/v1/teams'.format(BASE_HOST), json=teams_json, status=200)
+        responses.add(responses.GET, '{}/sample/v1/teams'.format(BASE_HOST), json=teams_json, status=200)
         self.api.get_company_teams()
         self.assertEqual(len(responses.calls), 1)

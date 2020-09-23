@@ -316,7 +316,7 @@ class DemandAPIClient(object):
 
     def upsert_project_permissions(self, project_id, upsert_permissions_data):
         self.validator.validate_request(
-            'upsert_project_permissions', 
+            'upsert_project_permissions',
             path_data={'extProjectId': '{}'.format(project_id)},
             request_body=upsert_permissions_data,
         )
@@ -562,7 +562,7 @@ class DemandAPIClient(object):
         self.validator.validate_request(
             'delete_template',
             path_data={'id': '{}'.format(id)},
-         )
+        )
         return self._api_delete('/templates/quotaplan/{}'.format(id))
 
     def get_templates(self, country, lang, **kwargs):

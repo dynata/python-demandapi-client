@@ -20,8 +20,12 @@ class TestProjectPermissionsEndpoints(unittest.TestCase):
     def test_get_project_permissions(self):
         with open('./tests/test_files/get_project_permissions.json', 'r') as get_permissions_file:
             permissions_json = json.load(get_permissions_file)
-        responses.add(responses.GET, '{}/sample/v1/projects/1/permissions'.format(BASE_HOST),
-        json=permissions_json, status=200)
+        responses.add(
+            responses.GET,
+            '{}/sample/v1/projects/1/permissions'.format(BASE_HOST),
+            json=permissions_json,
+            status=200
+        )
         self.api.get_project_permissions(1)
         self.assertEqual(len(responses.calls), 1)
         self.assertEqual(responses.calls[0].response.json(), permissions_json)

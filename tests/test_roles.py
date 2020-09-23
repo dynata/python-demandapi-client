@@ -21,6 +21,6 @@ class TestRolesEndpoints(unittest.TestCase):
         with open('./tests/test_files/get_roles.json', 'r') as roles:
             roles_json = json.load(roles)
         # Success response
-        responses.add(responses.GET,'{}/sample/v1/roles'.format(BASE_HOST), json=roles_json, status=200)
+        responses.add(responses.GET, '{}/sample/v1/roles'.format(BASE_HOST), json=roles_json, status=200)
         self.api.get_roles()
         self.assertEqual(len(responses.calls), 1)
