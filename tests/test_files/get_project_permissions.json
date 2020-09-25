@@ -1,0 +1,21 @@
+{
+    "currentUser": {
+        "roles": [
+            "PROJECT_MANAGER"
+        ]
+    },
+    "extProjectId": "1910a9fe-59de-4796-aac6-8b7356a7d340",
+    "teams": [
+        {
+            "id": 139,
+            "name": "All Users"
+        }
+    ],
+    "users": [
+        {
+            "id": 71,
+            "role": "PROJECT_MANAGER",
+            "username": "samplifyweb"
+        }
+    ]
+}

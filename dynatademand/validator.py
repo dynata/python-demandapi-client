@@ -17,6 +17,11 @@ ENDPOINTS = {
     'buy_project': ['path', 'body', ],
     'get_project_detailed_report': ['path', ],
     'reconcile_project': ['path', ],
+    'get_project_permissions': ['path', ],
+    'upsert_project_permissions': ['path', 'body', ],
+
+    # Roles
+    'get_roles': ['query', ],
 
     # Invoices
     'get_invoice': ['path', ],

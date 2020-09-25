@@ -1,0 +1,22 @@
+[
+    {
+        "allowedActions": [
+            {
+                "action": "GET PROJECT",
+                "description": "Ability to view all the project details",
+                "id": "GET_PROJECT"
+            },
+            {
+                "action": "LIST ALL PROJECTS",
+                "description": "Ability to view a list of projects on samplify",
+                "id": "LIST_ALL_PROJECTS"
+            }
+        ],
+        "assignableRoles": [
+            "SURVEY_AUTHOR"
+        ],
+        "description": "",
+        "id": "SURVEY_AUTHOR",
+        "name": "Survey Author"
+    }
+]
